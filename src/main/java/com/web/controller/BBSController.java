@@ -1,29 +1,5 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.dao.common.CommonDictionaryDao;
-import oa.entity.common.AccessLog;
-import oa.entity.common.CommonDictionary;
-import oa.service.DictionaryParam;
-import oa.web.controller.base.BaseController;
-
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.PageUtil;
 import com.common.util.SortList;
 import com.common.util.SystemHWUtil;
@@ -41,6 +17,27 @@ import com.time.util.TimeHWUtil;
 import com.util.JSONPUtil;
 import com.view.PaperNewsView;
 import com.view.UserSendcardView;
+import oa.dao.common.CommonDictionaryDao;
+import oa.entity.common.AccessLog;
+import oa.entity.common.CommonDictionary;
+import oa.service.DictionaryParam;
+import oa.web.controller.base.BaseController;
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.codehaus.jackson.map.ser.FilterProvider;
+import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
+import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/bbs")
@@ -52,6 +49,15 @@ public class BBSController extends BaseController<BBS> {
 	private UserSendcardDao userSendcardDao;
 	private UserDao userDao;
 	private CommonDictionaryDao commonDictionaryDao;
+
+	public static String getJsonP(Object map, String callback) {
+		SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+				.serializeAllExcept((String) null);
+		FilterProvider filters = new SimpleFilterProvider().addFilter(
+				Constant2.SIMPLEFILTER_JACKSON_PAPERNEWS, theFilter);
+		return HWJacksonUtils.getJsonP(map, callback, filters);
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/json", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String json(Model model, Integer type, Integer status,Integer sort,Integer userId,
@@ -94,29 +100,19 @@ public class BBSController extends BaseController<BBS> {
 				bbs2.setCardcontent(SystemHWUtil.splitAndFilterString(content, settings_cardcontent_max));
 			}
 		}
-		
+
 		setJsonPaging(map, view);
 		AccessLog accessLog=logInto(request);
 		accessLog.setDescription("手机端论坛列表");
 		accessLog.setOperateResult("共有帖子:"+view.getTotalRecords());
 		logSave(accessLog, request);
 		String content;
-		
+
 //		FilterProvider filters = simpleFilterProvider.addFilter(
 //				Constant2.SIMPLEFILTER_JACKSON_PAPERNEWS, theFilter);
 		content = HWJacksonUtils.getJsonP(map, callback);
 		return content;
 	}
-	
-	public static String getJsonP(Object map,String callback)
-	{
-		SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-				.serializeAllExcept((String)null);
-		FilterProvider filters = new SimpleFilterProvider().addFilter(
-				Constant2.SIMPLEFILTER_JACKSON_PAPERNEWS, theFilter);
-		return HWJacksonUtils.getJsonP(map, callback, filters);
-	}
-
 
 	@ResponseBody
 	@RequestMapping(value = "/json_detail", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
@@ -312,5 +308,17 @@ public class BBSController extends BaseController<BBS> {
 	}
 	protected String getListView(){
 		return "/index";
+	}
+
+	@Override
+	protected void beforeList(BBS roleLevel) {
+		roleLevel.setStatus(Constant2.NEWS_STATUS_ON);//额外的条件
+		super.beforeList(roleLevel);
+
+		/*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		AccessLog accessLog = logInto(request);
+		accessLog.setDescription("list test");
+		accessLog.setOperateResult("list test conditon:" + HWJacksonUtils.getJsonP(roleLevel));
+		logSave(accessLog, request);*/
 	}
 }

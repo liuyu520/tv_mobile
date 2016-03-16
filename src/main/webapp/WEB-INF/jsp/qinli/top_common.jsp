@@ -91,16 +91,16 @@
 <div class="nav_wrap">
     <ul class="nav">
         <li><a href="http://hbjltv.com">首页</a></li>
-        <li><a href="<%=path%>/news/list/2?status=1">新闻</a></li>
+        <li><a href="<%=path%>/news/list/2">新闻</a></li>
         <li><a href="<%=path%>/pic_news/list2?type=2&status=1">图闻</a></li>
-        <li><a href="<%=path%>/video/list/1?status=1">点播</a></li>
+        <li><a href="<%=path%>/video/list/1">点播</a></li>
         <li><a href="<%=path%>/video/list/2?status=1&targetView=lives/index">直播</a></li>
-        <li><a href="<%=path%>/news/list/5?status=1">政务</a></li>
-        <li><a href="<%=path%>/news/list/6?status=1">民生</a></li>
-        <li><a href="<%=path%>/news/list/3?status=1">监利</a></li>
-        <li><a href="<%=path%>/news/list/4?status=1">商讯</a></li>
+        <li><a href="<%=path%>/news/list/5">政务</a></li>
+        <li><a href="<%=path%>/news/list/6">民生</a></li>
+        <li><a href="<%=path%>/news/list/3">监利</a></li>
+        <li><a href="<%=path%>/news/list/4">商讯</a></li>
         <li><a href="<%=path%>/news/list/1?status=1">报料</a></li>
-        <li><a href="<%=path%>/bbs/list?status=1">论坛</a></li>
+        <li><a href="<%=path%>/bbs/list">论坛</a></li>
         <li><a href="<%=path%>/html/more.html" target="_blank">爱监利</a></li>
     </ul>
 </div>

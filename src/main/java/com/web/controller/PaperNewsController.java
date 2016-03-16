@@ -1,30 +1,5 @@
 package com.web.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.AccessLog;
-import oa.entity.common.CommonDictionary;
-import oa.service.DictionaryParam;
-import oa.web.controller.base.BaseController;
-
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.PageUtil;
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
@@ -42,6 +17,28 @@ import com.util.JSONPUtil;
 import com.util.TVUtils;
 import com.view.NewsCommentView;
 import com.view.PaperNewsView;
+import oa.entity.common.AccessLog;
+import oa.entity.common.CommonDictionary;
+import oa.service.DictionaryParam;
+import oa.web.controller.base.BaseController;
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.codehaus.jackson.map.ser.FilterProvider;
+import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
+import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/news")
@@ -415,5 +412,17 @@ public class PaperNewsController extends BaseController<PaperNews> {
 	}
 	protected void setRecordsPerPageBeforeQuery(PageView view) {
 		view.setRecordsPerPage(9);
+	}
+
+	@Override
+	protected void beforeList(PaperNews roleLevel) {
+		roleLevel.setStatus(Constant2.NEWS_STATUS_ON);//额外的条件
+		super.beforeList(roleLevel);
+
+		/*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		AccessLog accessLog = logInto(request);
+		accessLog.setDescription("list test");
+		accessLog.setOperateResult("list test conditon:" + HWJacksonUtils.getJsonP(roleLevel));
+		logSave(accessLog, request);*/
 	}
 }

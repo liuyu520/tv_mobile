@@ -1,19 +1,21 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.common.util.PageUtil;
+import com.common.util.SystemHWUtil;
+import com.common.util.WebServletUtil;
+import com.common.web.view.PageView;
+import com.dict.Constant2;
+import com.entity.TVVideo;
+import com.io.hw.file.util.FileUtils;
+import com.io.hw.json.HWJacksonUtils;
+import com.string.widget.util.ValueWidget;
+import com.time.util.TimeHWUtil;
+import com.util.JSONPUtil;
+import com.view.TVVideoView;
 import oa.entity.common.AccessLog;
 import oa.entity.common.CommonDictionary;
 import oa.service.DictionaryParam;
 import oa.web.controller.base.BaseController;
-
 import org.apache.commons.collections.map.ListOrderedMap;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -32,18 +34,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.common.util.PageUtil;
-import com.common.util.SystemHWUtil;
-import com.common.util.WebServletUtil;
-import com.common.web.view.PageView;
-import com.dict.Constant2;
-import com.entity.TVVideo;
-import com.io.hw.file.util.FileUtils;
-import com.io.hw.json.HWJacksonUtils;
-import com.string.widget.util.ValueWidget;
-import com.time.util.TimeHWUtil;
-import com.util.JSONPUtil;
-import com.view.TVVideoView;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/video")
@@ -352,5 +349,17 @@ public class TVVideoController extends BaseController<TVVideo> {
 	}
 	protected String getListView(){
 		return "/index";
+	}
+
+	@Override
+	protected void beforeList(TVVideo roleLevel) {
+		roleLevel.setStatus(Constant2.NEWS_STATUS_ON);//额外的条件
+		super.beforeList(roleLevel);
+
+		/*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		AccessLog accessLog = logInto(request);
+		accessLog.setDescription("list test");
+		accessLog.setOperateResult("list test conditon:" + HWJacksonUtils.getJsonP(roleLevel));
+		logSave(accessLog, request);*/
 	}
 }
