@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="order_submit.js"></script>
+    <script type="text/javascript" src="../jquery-1.11.1.js"></script>
+</head>
+<body>
+<input type="button" onclick="submitOrder();" value="提交">
+
+<form action="http://59.151.72.42:2917/gateway/gatewayManage.do?action=paymentManage" id="order_form" method="POST">
+
+
+</form>
+
+<input type="button" onclick="$('#order_form').submit();" value="提交">
+</body>
+</html>

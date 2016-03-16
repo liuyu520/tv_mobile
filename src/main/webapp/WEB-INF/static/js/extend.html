@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="common_util.js"></script>
+    <script type="application/ecmascript">
+
+        function A() {
+            this.name = "A";
+            /* this.sayHello=function(){
+             console.dir("Hello , "+this.name);
+             }*/
+
+        }
+        A.prototype.sayHello = function () {
+            console.dir("Hello , " + this.name);
+        }
+        A.prototype.setName = function (name2) {
+            this.name = name2;
+        }
+        function B() {
+            this.sex = 'man';
+            this.mySex = function () {
+                console.dir("sex:" + this.sex);
+            }
+        }
+
+        function C() {
+            this.age = 26;
+            /*this.myAge=function(){
+             console.dir("age:"+this.age);
+             }*/
+        }
+        C.prototype.myAge = function () {
+            console.dir("age:" + this.age);
+        }
+        var a = new A();
+        //        a.sayHello();
+        var c = new C();
+        //        c.myAge();
+        com.whuang.hsj.extend(B, A);
+        com.whuang.hsj.extend(B, C);
+        //        B.prototype=new C();
+        //        B.prototype.constructor=B;
+        com.whuang.hsj.extend(D, B);
+        function D() {
+        }
+
+        var b = new D();
+        b.mySex();
+        b.sayHello();
+        b.myAge();
+        b.setName("whuang");
+        b.sayHello();
+        console.dir(A);
+        console.dir(B);
+        console.dir(C);
+        console.info(a instanceof A);
+        console.info(b instanceof D);
+        console.info(c instanceof C);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="order_submit.js"></script>
+    <style>
+        .queryCondition {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="queryCondition"><label for="">企业ID</label>
+        <input name="orgId" value="90000728881" type="text"/>
+    </div>
+    <div class="queryCondition"><label for="">订单号</label>
+        <input name="orderId" type="text"/>
+    </div>
+    <input type="button" onclick="queryOrder();" value="查询订单"/>
+</div>
+<div id="queryResultDiv">
+
+</div>
+</body>
+</html>

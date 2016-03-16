@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>判断是否IE6</title>
+    <!--[if IE 6]>
+    <style type="text/css">
+        body {
+            color: #f00;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.ovmood.com/blog-read-33.html';
+            aHref.innerHTML = "只有IE6才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE6浏览器');
+        }
+    </script>
+    <![endif]-->
+</head>
+<body>
+<div>
+    只有是IE6才会显示红色.只有IE6才能看到超链接
+</div>
+</body>
+</html>

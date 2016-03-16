@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="common_util.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        //imgObj图片对象
+
+        var imgonmousedown = function (ev) {
+            console.log('imgonmousedown');
+            var event = window.event || ev;//兼容ie7 8
+            cleanUpDefaultEvent(event);//清除默认事件
+            var target2 = event.srcElement || event.target || event.toElement;
+            var position = {x: 0, y: 0};
+            var imgObj = target2;
+            position.x = event.clientX - imgObj.offsetLeft;//鼠标点击位置到图片左边的一段距离
+            position.y = event.clientY - imgObj.offsetTop;
+            document.onmousemove = function (ev) {
+                var event = window.event || ev;
+                (event.preventDefault) ? event.preventDefault() : event.returnValue = false;//阻止默认事件
+                var x = event.clientX - position.x;//移动后的left值
+                var y = event.clientY - position.y;
+                imgObj.style.left = x + 'px';
+                imgObj.style.top = y + 'px';
+            };
+            document.onmouseup = function () {//松开鼠标左键
+                document.onmousedown = null;
+                document.onmousemove = null;
+            };
+        };
+
+
+        window.onload = function () {
+            var imgObj = document.getElementsByTagName("img");
+            for (var i = 0; i < imgObj.length; i++) {
+                imgObj[i].onmousedown = imgonmousedown;
+                imgObj[i].onmousemove = function (event) {
+                    cleanUpDefaultEvent(event);//清除默认事件
+                }
+            }
+
+            for (var i = 0; i < imgObj.length; i++) {
+                if (imgObj[i].className == 'active') {//对当前图片进行操作
+                    imgObj[i].style.width = imgObj[i].offsetWidth * 1.1 + 'px';
+                    imgObj[i].style.height = imgObj[i].offsetHeight * 1.1 + 'px';
+                    break;
+                }
+                ;
+            }
+            ;
+            arr = [imgObj[0], imgObj[1], imgObj[2]];
+            setInterval(nextPic, 2000);//启动轮播
+        }
+        var scaleBig = function () {
+            var imgObj = document.getElementsByTagName("img");
+            for (var i = 0; i < imgObj.length; i++) {
+                if (imgObj[i].className == 'active') {//对当前图片进行操作
+                    imgObj[i].style.width = imgObj[i].offsetWidth * 1.1 + 'px';
+                    imgObj[i].style.height = imgObj[i].offsetHeight * 1.1 + 'px';
+                    break;
+                }
+                ;
+            }
+            ;
+        };
+
+        var scaleSmall = function () {
+            var imgObj = document.getElementsByTagName("img");
+            for (var i = 0; i < imgObj.length; i++) {
+                if (imgObj[i].className == 'active') {//对当前图片进行操作
+                    imgObj[i].style.width = imgObj[i].offsetWidth * 0.9 + 'px';
+                    imgObj[i].style.height = imgObj[i].offsetHeight * 0.9 + 'px';
+                    break;
+                }
+            }
+        };
+        var nextPic = function (isNext) {
+            isNext = isNext || true;
+            var liObj = document.getElementById('div').children;
+            if (arr[0] == undefined) {
+                for (var i = 0; i < liObj.length; i++) {
+                    arr.push(liObj[i].children[0]);
+                }
+            }
+            if (isNext) {
+            arr.push(arr[0]);//数组变化为 123->1231->231
+                arr.shift();
+            } else {
+                arr.unshift(arr[arr.length - 1]);//数组变化为 123->1231->231
+                arr.pop();
+            }
+            change();
+            arr[0].className = 'active';
+            arr[1].className = '';
+            arr[2].className = '';
+        };
+        var change = function () {
+            var alpha = 40;//从40开始变化
+            var speed = 3;//变化速度
+            var timer = setInterval(function () {
+                alpha = alpha + speed;
+                arr[0].style.filter = 'alpha(opacity=' + alpha + ')';//兼容ie7 8
+                arr[0].style.opacity = alpha / 100;
+                if (alpha >= 100) {
+                    clearInterval(timer);//清除定时器
+                }
+                ;
+            }, 30);
+            arr[1].style.opacity = 0.4;//非active图片透明度为40
+            arr[2].style.opacity = 0.4;
+        };
+        var restore = function () {
+            var imgObj = document.getElementsByTagName("img");
+            for (var i = 0; i < imgObj.length; i++) {
+                imgObj[i].style.width = '500px';
+                imgObj[i].style.height = '309px';
+                imgObj[i].style.left = '0';
+                imgObj[i].style.top = '50px';
+                imgObj[i].style.opacity = 1;
+                imgObj[i].style.filter = 'alpha(opacity = 100)';
+            }
+        };
+    </script>
+    <style>
+        img {
+            top: 50px;
+            position: absolute;
+            z-index: 99;
+            width: 500px;
+            height: 309px;
+        }
+
+        .active {
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+<div id="divInput">
+    <input type="button" onclick="nextPic(false)" value="上一张"/>
+    <input type="button" onclick="scaleBig()" value="放大"/>
+    <input type="button" onclick="restore()" value="还原"/>
+    <input type="button" onclick="scaleSmall()" value="缩小"/>
+    <input type="button" onclick="nextPic(true)" value="下一张"/>
+</div>
+<div id="div">
+    <li><img class="active" src="1.jpg"/></li>
+    <li><img class="" src="2.jpg"/></li>
+    <li><img class="" src="3.jpg"/></li>
+</div>
+</body>
+</html>

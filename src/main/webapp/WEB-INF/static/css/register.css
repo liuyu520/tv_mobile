@@ -1,0 +1,138 @@
+/* ---------- FONTAWESOME ---------- */
+/* ---------- http://fortawesome.github.com/Font-Awesome/ ---------- */
+/* ---------- http://weloveiconfonts.com/ ---------- */
+/*@import url(http://weloveiconfonts.com/api/?family=fontawesome);*/
+/* ---------- ERIC MEYER'S RESET CSS ---------- */
+/* ---------- http://meyerweb.com/eric/tools/css/reset/ ---------- */
+/*@import url(http://meyerweb.com/eric/tools/css/reset/reset.css);*/
+/* ---------- FONTAWESOME ---------- */
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+
+/* ---------- GENERAL ---------- */
+/** {
+    box-sizing: border-box;
+}*/
+/**:before, *:after {
+    box-sizing: border-box;
+}*/
+/*
+body {
+    background: #c0c0c0;
+    color: #000;
+    font: 100%/1.5em "Varela Round", sans-serif;
+    margin: 0;
+}*/
+
+/*input {
+    background-image: none;
+    border: none;
+    font: 100%/1.5em "Varela Round", sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}*/
+
+/*
+.container {
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+*/
+
+/* ---------- LOGIN ---------- */
+#register_user {
+    width: 400px;
+    display: none;
+    position: absolute;
+    top: 24px;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    background-image: linear-gradient(top, #fff, #eee);
+    padding-top: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,.9);
+    border-radius: 20px 0 20px 20px;
+}
+nav li #register_user {
+    right: 0;
+    border: 1px solid #f95252;
+}
+#register_user h2 {
+    background: #f95252;
+    border-radius: 20px 0 0 0;
+    color: #fff;
+    font-size: 28px;
+    padding: 0 10px;
+}
+
+#register_user h2 span[class*="fontawesome-"] {
+    margin-right: 14px;
+}
+
+#register_user fieldset {
+    background: #fff;
+    border-radius: 0 0 20px 20px;
+    padding: 2px 26px;
+}
+
+#register_user fieldset p {
+    color: #777;
+    margin-bottom: 14px;
+}
+
+#register_user fieldset p:last-child {
+    margin-bottom: 0;
+}
+
+fieldset.inputs input {
+    border-radius: 3px;
+}
+
+fieldset.submit2 input[type="email"], fieldset.submit2 input[type="text"], #register_user fieldset input[type="password"] {
+    background: #eee;
+    color: #777;
+    padding: 4px 10px;
+    width: 100%;
+}
+
+fieldset.submit2 input[type="button" ] {
+    background: #33cc77;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    padding: 4px 0;
+    width: 100px;
+    border-radius: 5px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+fieldset.submit2 input[type="button" ]:hover {
+    background: #28ad63;
+    font-weight: bold;
+}
+
+fieldset.submit2 input[type="submit" ] {
+    background: #33cc77;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    padding: 4px 0;
+    width: 100px;
+    border-radius: 5px;
+}
+
+fieldset.submit2 input[type="submit"  ]:hover {
+    background: #28ad63;
+    font-weight: bold;
+}

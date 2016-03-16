@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>label左对齐</title>
+    <style>
+        ul, li {
+            /*list-style: outside none none;*/
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        li label {
+            width: 20%;
+            float: left; /* It is necessary */
+        }
+
+        ul {
+            /*background-color: #0a8cd2;*/
+        }
+
+        li.button {
+            text-align: center;
+            margin-left: -40px;
+        }
+
+        input.errorBorder {
+            border: solid 1px #ff0000;
+        }
+    </style>
+</head>
+<body>
+<form action="">
+    <ul style="width: 400px">
+        <li>
+            <label for="username">用户名</label><input id="username" type="text"/> <span>用户名不能为空</span>
+        </li>
+        <li>
+            <label for="password">密码</label><input id="password" type="text"/>
+        </li>
+        <li class="button">
+            <input type="button" value="下一步"/>
+        </li>
+    </ul>
+</form>
+<script type="text/javascript" src="jquery-1.11.1.js"></script>
+<script type="text/javascript" src="common_util.js"></script>
+<script type="text/javascript" src="jplaceholder.js"></script>
+<script type="text/javascript">
+
+    $('#username').placeholder({
+        word: '用户名', color: '#ddd', normalFontColor: '#f00', maxLen: 4, minLen: 2, errorBorderClass: 'errorBorder',
+        keyup_callback: function () {
+            console.log('keyup_callback');
+        }
+    });
+    $('#password').placeholder({word: '请输入密码', normalFontColor: '#f00', color: '#ddd'}, function () {
+        console.log('callback');
+    });
+
+
+    //    console.log(compareColor('999', 'rgb(153, 153, 153)'));
+</script>
+</body>
+</html>

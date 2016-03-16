@@ -1,0 +1,50 @@
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<div class="main">
+    <div class="trading-steps">
+        <ul>
+            <li class="chosen-one">
+                <span class="chosen-math">1</span>
+                <span class="chosen-name">确认购买项</span>
+            </li>
+            <li class="chosen-tow ">
+                <span class="chosen-math">2</span>
+                <span class="chosen-name">提交订单</span>
+            </li>
+            <li class="chosen-tow chosen-tow-on">
+                <span class="chosen-math">3</span>
+                <span class="chosen-name">支付</span>
+            </li>
+            <li class="chosen-last">
+                <span class="chosen-math">4</span>
+                <span class="chosen-name">应用开通</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="title">订单支付</div>
+
+    <div class="payable">
+        <div class="pay-code">
+            <h2>订单提交成功，请您尽快付款！ 订单号：{{=it.orderNo}}</h2>
+
+            <h3><span class="pay-font">应付总额：</span><span class="pay-font-red">￥{{=it.totalPrice}}.00</span></h3>
+        </div>
+        <div class="prompt">请您在提交订单后24小时内完成支付，否者订单会自动取消！</div>
+    </div>
+
+    <div class="pay-platform">
+        <h2>支付平台：</h2>
+        <img src="http://www.static.chanjet.com/chanjet/images/appstore/pay02.gif" s>
+    </div>
+
+
+</div><!--main-->
+
+<div class="footer">
+    <div class="footer-middle">
+        <div class="submit">
+            <a class="money"><span>应付总额：</span><span class="total">￥{{=it.totalPrice}}.00</span></a>
+            <a href="javascript:;" class="sub-btn" onclick="jumpPayCashier();">立即支付</a>
+        </div>
+    </div>
+</div><!--footer-->

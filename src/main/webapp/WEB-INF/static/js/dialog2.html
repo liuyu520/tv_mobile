@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .subPagePanel {
+            /*overflow-y: auto;*/
+            overflow-x: hidden; /*隐藏水平滚动条*/
+            width: auto;
+            min-width: 400px;
+            height: auto /* 320px */;
+            max-height: calc(100% - 20px); /* 当时窗口的最大高度减去20px*/
+            background-color: #fff;
+            background-repeat: no-repeat;
+            border: 1px solid #03a9f4;
+            border-radius: 5px;
+            position: fixed; /*保证在可视区域内居中 */
+            z-index: 100;
+            display: none;
+            /*top: 20px;*/
+        }
+
+        div.shadow {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=143, Color=#EA4748)"; /*IE 8*/
+            -moz-box-shadow: 4px 3px 10px #03a9f4; /*FF 3.5+*/
+            -webkit-box-shadow: 4px 3px 10px #03a9f4; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 4px 3px 10px #03a9f4; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color=#03a9f4); /*IE 5.5-7*/
+        }
+
+        .subPagePanel h2 {
+            background-color: #03a9f4;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 5px;
+            cursor: move;
+            margin-top: 0;
+        }
+
+        .subPagePanel h2 label {
+            cursor: move;
+        }
+
+        .subPagePanel img {
+            cursor: pointer;
+        }
+
+        .subPagePanel a.close {
+            width: 40px;
+            height: 30px;
+            float: right;
+            cursor: pointer;
+            background: #fff url(c_icon_2_tiny.png) no-repeat;
+            background-position: -278px -166px; /*x, y */;
+            background-size: 335px 910px;
+            border-radius: 5px;
+        }
+
+        .subPagePanel a.close:hover {
+            background-position: -278px -196px; /*x, y */;
+        }
+
+        .subPagePanel .subContent {
+            margin: 5px;
+            overflow-y: auto;
+            height: calc(100% - 10px); /* 后面js会修改高度 */
+            overflow-x: hidden;
+            padding-right: 20px;
+        }
+
+        #cboxOverlay {
+            position: fixed;
+            width: 100%;
+            /*height: 100%;*/
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            overflow: hidden;
+            height: 100%;
+            /*display: none;*/
+            opacity: 0.1;
+            filter: Alpha(opacity=10); /*只对ie7,ie8有效*/
+        }
+
+        .ui-modal-mask-blur {
+            -webkit-filter: blur(2px);
+            -moz-filter: blur(2px);
+            -ms-filter: blur(2px);
+            -o-filter: blur(2px);
+            filter: blur(2px);
+
+            /*color: transparent;*/
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        / / 兼容IE11
+        }
+
+        .cannot_select {
+            -moz-user-select: none; /*火狐*/
+            -webkit-user-select: none; /*webkit浏览器*/
+            -ms-user-select: none; /*IE10*/
+            -khtml-user-select: none; /*早期浏览器*/
+            user-select: none;
+
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <style type="text/css">
+        /*兼容IE8,IE7*/
+        .subPagePanel a.close {
+            background: #fff url(c_icon_2_tiny.png) no-repeat;
+            background-position: -225px -121px; /*x, y */;
+            background-size: 335px 910px;
+        }
+
+        .subPagePanel a.close:hover {
+            background-position: -225px -151px; /*x, y */;
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+<div id="container">
+    什么是关键渲染路径？
+
+    清楚起见，让我们先定义一些概念：
+
+    关键：绝对需要 渲染：显示或者展示（在我们的情境中，网页经过渲染才能呈现给用户） 路径：使我们的网页展示在浏览器中的一系列事件 首屏：是用户滚动页面之前就能看见的部分。
+
+    因此，换言之，渲染路径就是一系列使你的网页呈现在浏览器中的事件。而关键渲染路径是呈现网页首屏所需的那些事件。因为几乎所有网站在渲染网页时都包含了不必要的步骤，而减少这些不必要的路径，能使你的网页加载速度提高几秒钟，这也是提高网页速度的最快方法。
+
+    路径
+
+    为了显示一张网页，浏览器必须获取网页所需的所有资源。一个简单的例子：一个网页需要一张图片，一个CSS文件，一个JavaScript文件。
+
+    我们来看看这张网页在展示之前经历的路径：
+
+    浏览器下载html文件
+    浏览器读取html文件，发现里面涉及一个CSS文件，一个JavaScript文件和一张图片
+    浏览器开始下载这张图片
+    浏览器发现不获取CSS和JavaScript文件就无法显示网页
+    浏览器下载CSS文件并读取之，确保除此之外没有别的文件需要被访问
+    浏览器发现不获取JavaScript文件还是无法显示网页
+    浏览器下载JavaScript文件并读取之，确保除此之外没有别的文件需要被访问
+    浏览器发现现在可以显示网页了
+    <br>
+    <input type="button" id="openDialog" value="弹出对话框"/>
+</div>
+<!--  弹出窗口层 -->
+<div id="subPagePanel" class="subPagePanel shadow">
+    <h2 style="color: #fff;font-weight: bold;" class="ui-icon-close cannot_select"><label>对话框</label>
+        <a title="关闭" onclick="closeSubPagePanel();" style="margin-top: 4px;margin-right: 4px;  " class="close"></a>
+    </h2>
+
+    <div class="subContent">
+        <!-- <img style="margin:500px;width:50px" src="<%=path%>/static/images/loading/progress.gif"> -->
+
+        <form class="bbs-send-form form" id="adminLogin">
+            <fieldset class="inputs">
+                <label for="admin_username">用户名</label>
+                <input type="text" id="admin_username" name="username" placeholder="用户名" required="">
+
+            </fieldset>
+            <fieldset class="inputs">
+                <label for="admin_password">密码</label>
+                <input type="text" id="admin_password" name="password" placeholder="密码"
+                       required="">
+            </fieldset>
+
+            <fieldset class="submit2 inputs">
+                <input type="button" class="ui-button" style="margin-top: 5px;" value="确定">
+            </fieldset>
+
+        </form>
+    </div>
+
+</div>
+<!-- / 弹出窗口层 -->
+
+<div id="cboxOverlay" class="cannot_select" style="  visibility: visible;"></div>
+<script type="text/javascript" src="jquery-1.11.1.js"></script>
+<script type="text/javascript" src="common_util.js"></script>
+<script type="text/javascript">
+    var modalMaskClass = 'ui-modal-mask-blur';
+    $(function () {
+        $('#container').addClass(modalMaskClass);
+        var $subPagePanel = $('#subPagePanel');
+        addEvent('click', 'openDialog', function () {
+            $subPagePanel.show('normal');
+            $('#cboxOverlay').show();
+            $('#container').addClass(modalMaskClass);
+        });
+        com.whuang.hsj.centerXY($subPagePanel);
+        console.log('subPagepanel dispaly:' + $subPagePanel.get(0).style.display);
+        $subPagePanel.show('normal');
+        console.log('subPagepanel dispaly:' + $subPagePanel.get(0).style.display);
+        var $cboxOverlay = $('#cboxOverlay');
+        $cboxOverlay[0].ondblclick = function (event) {
+            event = event || window.event || arguments.callee.caller.arguments[0];
+            console.log(event.cancelBubble);
+            cleanUpDefaultEvent(event);
+            event.returnValue = false;
+            cancelBubble();
+            return false;
+        };
+        $cboxOverlay[0].onclick = function (event) {
+            event = event || window.event || arguments.callee.caller.arguments[0];
+            cleanUpDefaultEvent(event);
+            event.returnValue = false;
+            cancelBubble();
+            return false;
+        }
+    });
+    var closeSubPagePanel = function () {
+        var $subPagePanel = $('#subPagePanel');
+        $subPagePanel.hide('normal');
+        $('#cboxOverlay').hide();
+        $('#container').removeClass(modalMaskClass);
+    };
+
+    com.whuang.hsj.drag('subPagePanel');//增加对话框的拖拽功能
+</script>
+</body>
+</html>

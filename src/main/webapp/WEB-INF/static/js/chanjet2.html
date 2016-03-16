@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul, li {
+            /*list-style: outside none none;*/
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        li label {
+            width: 25%;
+            float: left; /* It is necessary */
+        }
+
+        li.button {
+            text-align: center;
+            margin-left: -40px;
+        }
+
+        input[type=text] {
+            width: 280px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        input[type=password] {
+            width: 280px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        input.errorBorder {
+            border: solid 1px #ff0000;
+        }
+
+        div.module {
+            border: 1px solid #dbdbdb;
+            width: 600px;
+            border-radius: 3px;
+            margin-top: 10px;
+            /*text-align: center;*/
+        }
+
+        div.module h3 {
+            text-align: center;
+            color: #03a9f4;
+        }
+
+        .subPagePanel {
+            /*overflow-y: auto;*/
+            overflow-x: hidden; /*隐藏水平滚动条*/
+            width: auto;
+            min-width: 400px;
+            height: auto /* 320px */;
+            max-height: calc(100% - 20px); /* 当时窗口的最大高度减去20px*/
+            background-color: #fff;
+            background-repeat: no-repeat;
+            border: 1px solid #03a9f4;
+            border-radius: 5px;
+            position: fixed; /*保证在可视区域内居中 */
+            z-index: 100;
+            display: none;
+            top: 20px;
+        }
+
+        div.shadow {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=143, Color=#EA4748)"; /*IE 8*/
+            -moz-box-shadow: 4px 3px 10px #03a9f4; /*FF 3.5+*/
+            -webkit-box-shadow: 4px 3px 10px #03a9f4; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 4px 3px 10px #03a9f4; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color=#03a9f4); /*IE 5.5-7*/
+        }
+
+        .subPagePanel h2 {
+            background-color: #03a9f4;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 5px;
+            cursor: move;
+            margin-top: 0;
+        }
+
+        .subPagePanel h2 label {
+            cursor: move;
+        }
+
+        .subPagePanel img {
+            cursor: pointer;
+        }
+
+        .subPagePanel a.close {
+            width: 40px;
+            height: 30px;
+            float: right;
+            cursor: pointer;
+            background: #fff url(c_icon_2_tiny.png) no-repeat;
+            background-position: -278px -166px; /*x, y */;
+            background-size: 335px 910px;
+            border-radius: 5px;
+        }
+
+        .subPagePanel a.close:hover {
+            background-position: -278px -196px; /*x, y */;
+        }
+
+        .subPagePanel .subContent {
+            margin: 5px;
+            overflow-y: auto;
+            height: calc(100% - 10px); /* 后面js会修改高度 */
+            overflow-x: hidden;
+            padding-right: 20px;
+        }
+
+        #cboxOverlay {
+            position: fixed;
+            width: 100%;
+            /*height: 100%;*/
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            overflow: hidden;
+            height: 100%;
+            /*display: none;*/
+            opacity: 0.1;
+            filter: Alpha(opacity=10); /*只对ie7,ie8有效*/
+        }
+
+        .ui-modal-mask-blur {
+            -webkit-filter: blur(2px);
+            -moz-filter: blur(2px);
+            -ms-filter: blur(2px);
+            -o-filter: blur(2px);
+            filter: blur(2px);
+
+            /*color: transparent;*/
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        / / 兼容IE11
+        }
+
+        .cannot_select {
+            -moz-user-select: none; /*火狐*/
+            -webkit-user-select: none; /*webkit浏览器*/
+            -ms-user-select: none; /*IE10*/
+            -khtml-user-select: none; /*早期浏览器*/
+            user-select: none;
+
+        }
+
+        span.important {
+            color: #ff0000;
+            font-weight: bolder;
+        }
+    </style>
+    <script type="text/javascript" src="http://123.57.250.51/static/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="http://123.57.250.51/static/js/md5.js"></script>
+    <script type="text/javascript" src="http://123.57.250.51/static/js/common_util.js"></script>
+    <script type="text/javascript" src="http://123.57.250.51/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="http://123.57.250.51/static/js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        var modalMaskClass = 'ui-modal-mask-blur';
+        var cia_server = 'http://cia.chanapp.chanjet.com';
+        $(function () {
+            autoGetAuthCode(false);
+            var password_cookie = $.cookie("password_whuang");
+            if (password_cookie) {
+                console.log('password_cookie:' + password_cookie);
+                $("#password").val(password_cookie);
+            }
+
+            var password_cookie = $.cookie("password_whuang2");
+            if (password_cookie) {
+                console.log('password_cookie:' + password_cookie);
+                $("#password2").val(password_cookie);
+            }
+            var $subPagePanel = $('#subPagePanel');
+            addEvent('click', 'openDialog', function () {
+                $subPagePanel.show('normal');
+                $('#cboxOverlay').show();
+                $('#container').addClass(modalMaskClass);
+            });
+            $('#authImageInput').val('');
+        });//onready
+        checkForm = function (form2) {
+            checkFormLogin(form2, cia_server + "/internal_api/v1/webLoginAppAndAuthorizeApp");
+        };
+        checkFormLogin = function (form2, serverUrl) {
+            var usernameVal = $('input[name=auth_username]').val();
+            if (usernameVal == '') {
+                alert('请输入用户名');
+                return false;
+            }
+            var $password = $('input[name=password]');
+            var passwordVal = $password.val();
+            if (passwordVal.length <= 20) {
+                var passwordMD5Val = calcMD5(passwordVal);
+                $password.val(passwordMD5Val);
+            }
+            var $authCode = $('input[name=auth_code]');
+            if ($authCode.val() == '') {
+                autoGetAuthCode();
+                return false;
+            }
+            form2.action = serverUrl;
+            if (passwordVal) {
+                console.log('saved to coolie:' + passwordVal);
+                $.cookie("password_whuang", passwordVal, {expires: 7});
+            }
+            return true;
+        };
+        var submitForm = function () {
+            var $form = $('form');
+            $form.attr('action', cia_server + "/internal_api/v1/webLoginAppAndAuthorizeApp");
+            $form.submit();
+        };
+        autoGetAuthCode = function (isAlert) {
+            $.ajax({
+                url: cia_server + '/internal_api/authorizeByJsonp',
+                type: 'GET',
+                dataType: 'jsonp',
+                data: {client_id: 'chanjetapp'},
+                success: function (data) {
+                    console.log(data);
+                    if (data.auth_code) {
+                        $('#auth_code').val(data.auth_code);
+                        $('#auth_code2').val(data.auth_code);
+                        $('#authCodeSpan').text(data.auth_code);
+                    } else if (data.code) {
+                        if (isAlert === undefined || isAlert) {
+                            alert('You have logined already');
+                        }
+                        return;
+                    }
+                }
+            });
+        }
+        autoAssistKeyPress = function (event) {
+            event = event || window.event || arguments.callee.caller.arguments[0];
+            console.log(event);
+            var charCode2;
+            if ('charCode' in event) {//IE7 and IE8 no charCode
+                charCode2 = event.charCode;
+            } else {
+                //console.log('no charCode');
+                charCode2 = event.keyCode;
+            }
+            var eventTarget = event.srcElement || event.target || event.toElement;
+            if (charCode2 == 64) {
+                var val = eventTarget.value;
+                eventTarget.value = val + '@chanjet.com';
+                event.returnValue = false;
+                return false;
+            }
+        };
+        var ajaxLogout = function (self) {
+            $form = com.whuang.hsj.getForm(self);
+//            $form.ajaxSubmit({success: function (data) {
+//
+//            }});
+            $.ajax({
+                url: cia_server + '/internal_api/internal_logout',
+                type: 'GET',
+                dataType: 'jsonp',
+                data: {
+                    client_id: $('#client_id').val(),
+                    access_token: $form[0].access_token.value,
+                    callback: 'callback'
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    $('#logoutResult').html(JSON.stringify(data));
+                }
+            });
+        };
+
+        var jsonPWebLogin = function (self) {
+            $form = com.whuang.hsj.getForm(self);
+            var $password = $form.find('input[name=password]');
+            var passwordVal = $password.val();
+            if (passwordVal.length <= 20) {
+                var passwordMD5Val = calcMD5(passwordVal);
+                $password.val(passwordMD5Val);
+            }
+            $.ajax({
+                url: 'http://www.chanjet.com/login/webLogin',
+                type: 'GET',
+                dataType: 'jsonp',
+                data: $form.serialize(),
+                success: function (data) {
+                    if (passwordVal) {
+                        console.log('saved to coolie:' + passwordVal);
+                        $.cookie("password_whuang2", passwordVal, {expires: 7});
+                    }
+                    if (data.errorCode == 'authImage') {
+                        $('#authImage').attr('src', 'http://www.chanjet.com/authImage?' + new Date().getTime());
+                    }
+                    $('#access_token').val(data.access_token);
+                    console.log(data);
+                    $('#loginResult').html(data.access_token + '<br>' + data.email);
+                }
+            });
+        }
+        var closeSubPagePanel = function () {
+            var $subPagePanel = $('#subPagePanel');
+            $subPagePanel.hide('normal');
+            $('#cboxOverlay').hide();
+            $('#container').removeClass(modalMaskClass);
+        };
+    </script>
+</head>
+<body>
+<H2 style="display: inline-block;">请在火狐浏览器中运行</H2> <input type="button" id="openDialog" value="了解更多"/>
+<hr/>
+<div>
+    <a target="_blank"
+       href="http://cia.chanapp.chanjet.com/internal_api/authorizeByJsonp?client_id=chanjetapp&callback=jQuery111205043303086422384_1432861628263&jsonp=true&_=1432861628266">获取认证码(跳转)</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <input type="button" value="自动填充认证码" onclick="autoGetAuthCode();"/>
+</div>
+<div id="loginDiv" class="module">
+    <h3>平台接口登录</h3>
+
+    <form method="post"
+          onsubmit="return checkForm(this);" target="ifr-result">
+        <ul>
+            <li>
+                <label for="auth_username">用户名</label><input onkeypress="return autoAssistKeyPress(event)"
+                                                             name="auth_username" id="auth_username"
+                                                             value="huangweii@chanjet.com" type="text"/>
+            </li>
+            <li>
+                <label for="password">密码</label><input name="password" id="password" type="password"/>
+            </li>
+            <li>
+                <label for="auth_code">认证码</label><input name="auth_code" id="auth_code" type="text"/> <span
+                    id="authCodeSpan"></span>
+            </li>
+            <li>
+                <label for="appKey">appKey</label><input name="appKey" id="appKey" readonly
+                                                         value="c3e6ac00-96db-11e4-a5ed-180373f5f6fc" type="text"/>
+            </li>
+            <li>
+                <label for="appKey">appSecret</label><input name="appSecret" id="appSecret" readonly value="gh7Wq5"
+                                                            type="text"/>
+            </li>
+            <li>
+                <label for="client_id">client_id</label><input name="client_id" readonly value="chanjetapp"
+                                                               id="client_id" type="text"/>
+            </li>
+            <li>
+                <label for="client_secret">client_secret</label><input name="client_secret" id="client_secret" readonly
+                                                                       value="ca8Pv2" type="text"/>
+            </li>
+            <li>
+                <label for="originCode">originCode</label><input name="originCode" id="originCode" readonly
+                                                                 value="chanjet" type="text"/>
+            </li>
+            <li>
+                <label for="needOrgLists">needOrgLists</label>
+                <select name="needOrgLists" id="needOrgLists">
+                    <option value="1" selected="selected">1</option>
+                    <option value="0">0</option>
+                </select>
+            </li>
+            <li>
+                <input type="submit" value="登录"/>
+            </li>
+        </ul>
+    </form>
+    <input type="button" value="获取iframe内容" onclick="alert($(window.frames['ifr-result'].document.body).html());"/>
+    <iframe name="ifr-result" frameborder="0" style="width: 600px;" onloadeddata="alert(111)"
+            ontimeupdate="alert(222)"></iframe>
+</div>
+<div class="module">
+    <h3>官网登录</h3>
+
+    <form action="">
+        <ul>
+            <li>
+                <label for="auth_username2">用户名</label><input onkeypress="return autoAssistKeyPress(event)"
+                                                              name="auth_username" id="auth_username2"
+                                                              value="huangweii@chanjet.com" type="text"/>
+            </li>
+            <li>
+                <label for="password2">密码</label><input name="password" id="password2" type="password"/>
+            </li>
+            <li>
+                <label for="auth_code2">认证码</label><input name="auth_code" id="auth_code2" type="text"/> <span
+                    id="authCodeSpan2"></span>
+            </li>
+            <li>
+                <label for="auth_code2">图形验证码</label><input name="authImage" id="authImageInput" type="text"/> <img
+                    id="authImage"/>
+            </li>
+            <li>
+                <input type="button" onclick="jsonPWebLogin(this)" value="官网登录"/>
+            </li>
+        </ul>
+        <input type="hidden" value="1" name="jsonp"/>
+        <!-- <input type="hidden" value="" name="authImage" />-->
+    </form>
+    <div id="loginResult"></div>
+</div>
+<div class="module">
+    <h3>注销</h3>
+
+    <form>
+        <ul>
+
+            <!-- <li>
+                 <label for="client_id2">client_id</label><input name="client_id" readonly value="chanjetapp"
+                                                                 id="client_id2" type="text"/>
+             </li>-->
+            <li>
+                <label for="access_token">access_token</label><input name="access_token"
+                                                                     id="access_token" type="text"/>
+            </li>
+            <li>
+                <input type="button" onclick="ajaxLogout(this)" value="注销"/>
+            </li>
+        </ul>
+    </form>
+    <div id="logoutResult"></div>
+</div>
+<!--  弹出窗口层 -->
+<div id="subPagePanel" class="subPagePanel shadow">
+    <h2 style="color: #fff;font-weight: bold;" class="ui-icon-close cannot_select"><label>对话框</label>
+        <a title="关闭" onclick="closeSubPagePanel();" style="margin-top: 4px;margin-right: 4px;  " class="close"></a>
+    </h2>
+
+    <div class="subContent">
+        1,打开浏览器,在地址栏中输入 <span class="important">about:config</span>;<br>
+        2,点击" I promise " 按钮<br>
+        3,搜索"network.http.accept.default"<br>
+        4,双击就可以修改<br>
+        5,输入 "<span class="important">*/*;q=0.9,*/*;q=0.8</span>"
+
+    </div>
+
+</div>
+<!-- / 弹出窗口层 -->
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>对IE7,8,9的判断</title>
+    <!--[if IE 7]>
+    <style type="text/css">
+        body {
+            color: #06f
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.baidu.com';
+            aHref.innerHTML = "只有IE7才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE7浏览器');
+        }
+    </script>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <style type="text/css">
+        body {
+            color: #90f
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.baidu.com';
+            aHref.innerHTML = "只有IE8才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE8浏览器');
+        }
+    </script>
+    <![endif]-->
+
+    <!--[if IE 9]>
+    <style type="text/css">
+        body {
+            color: #00f
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.baidu.com';
+            aHref.innerHTML = "只有IE9才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE9浏览器');
+        }
+    </script>
+    <![endif]-->
+
+    <!--[if IE 10]>
+    <style type="text/css">
+        body {
+            color: #f00;
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.jb51.net/css/272535.html';
+            aHref.innerHTML = "只有IE10才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE10浏览器');
+        }
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+判断不了IE10,IE11及以上
+<div>判断IE浏览器版本</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript"
+            src="jquery-1.11.1.js"></script>
+    <script type="text/javascript"
+            src="common_util.js"></script>
+    <script type="text/javascript"
+            >
+        var imgURL=null;
+        $(function() {
+            com.whuang.hsj.previewLocalDiskImage($('#upload_image'),$("#previewImage"));
+        });
+    </script>
+</head>
+<body>
+<div>
+    <input id="upload_image" type="file" name="image" accept="image/*" />
+</div>
+<img id="previewImage" alt="暂无图片显示" >
+</body>
+</html>

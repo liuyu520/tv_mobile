@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>兼容IE6,IE7,IE8,IE9,不兼容IE10,IE11</title>
+    <!--[if IE]>
+    <style type="text/css">
+        body {
+            color: #f60;
+        }
+    </style>
+    <script TYPE="text/javascript">
+        window.onload = function () {
+            var aHref = document.createElement('a');
+            aHref.href = 'http://www.baidu.com';
+            aHref.innerHTML = "IE6,IE7,IE8,IE9才能看到";
+            var br2 = document.createElement('br');
+            var div2 = document.getElementsByTagName('div')[0];
+            div2.appendChild(br2);
+            div2.appendChild(aHref);
+            alert('您使用的是IE浏览器');
+        }
+    </script>
+    <![endif]-->
+</head>
+<body>
+<div>
+    上述对IE浏览器的判断只兼容IE6,IE7,IE8,IE9.<br>
+    判断不了IE10,IE11
+</div>
+</body>
+</html>

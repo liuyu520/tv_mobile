@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>阻止事件冒泡</title>
+    <script src="common_util.js" type="application/javascript"></script>
+</head>
+<body>
+<div id="outDiv" style="width: 200px;height: 50px;background-color: #9a9afb">
+    <input type="button" id="myBtn" value="点我啊"/>
+</div>
+<input type="button" id="cancelBtn" value="取消按钮事件"/>
+<script type="application/javascript">
+    var count = 1;
+    var button_func = function (event) {
+        cancelBubble(event);
+        console.log('this is button ' + (count++));
+    };
+    addEvent('click', com.whuang.hsj.$$id('outDiv'), function (event) {
+        console.log('this is div' + (count++));
+    })
+    addEvent('click', com.whuang.hsj.$$id('myBtn'), button_func);
+    addEvent('click', com.whuang.hsj.$$id('cancelBtn'), function (event) {
+        removeEvent('click', com.whuang.hsj.$$id('myBtn'), button_func);
+    })
+</script>
+</body>
+</html>

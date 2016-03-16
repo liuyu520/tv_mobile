@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form class="bbs-send-form form" id="adminLogin">
+    <fieldset class="inputs">
+        <label for="admin_username">用户名</label>
+        <input type="text" id="admin_username" name="username" placeholder="用户名" required="">
+
+    </fieldset>
+    <fieldset class="inputs">
+        <label for="admin_password">密码</label>
+        <input type="text" id="admin_password" name="password" placeholder="密码"
+               onkeypress="pressEnterTo(event,admin.login)" required="">
+    </fieldset>
+
+    <fieldset class="submit2 inputs">
+        <input type="button" onclick="admin.login(this);" class="ui-button" style="margin-top: 5px;" value="授权">
+    </fieldset>
+    <script type="text/javascript">
+        $(function () {
+            $("#adminLogin input[name=username]").get(0).focus();
+        });
+    </script>
+</form>
+</body>
+</html>

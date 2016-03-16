@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>版本管理</title>
+<script type="text/javascript" src="../../static/js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../static/js/common_util.js"></script>
+<script type="text/javascript" src="../../static/js/tv.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.grumble.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.form.js"></script>
+<script type="text/javascript" src="../../static/js/msgbox.js"></script>
+</head>
+<body>
+<div>
+<form class="bbs-send-form form"
+      onsubmit="return tip.add_tip(this);"><!-- tip.add_tip(this) -->
+
+    <fieldset class="inputs">
+        <label for="tip_title">版本号</label> <input type="text" id="tip_title" name="latestversion" placeholder="请输入版本号"
+                                                 required>
+    </fieldset>
+    <fieldset class="inputs">
+        <label for="tip_content">MD5</label>
+        <textarea rows="10" cols="70" id="tip_content" name="md5" placeholder="MD5值" required></textarea>
+    </fieldset>
+    <fieldset class="inputs">
+        <label for="tip_contacts">apk名称</label> <input type="text" id="tip_contacts" name="path" placeholder="apk名称"
+                                                     required>
+    </fieldset>
+    <fieldset class="inputs">
+        <label for="fileToUpload">apk</label> <input id="fileToUpload" type="file" accept="*/*" name="image223"
+                                                    placeholder="apk"
+            >
+    </fieldset>
+    <fieldset class="submit2 inputs">
+        <input type="button" class="ui-button" id="uploadFileBtn" onclick="ajaxUploadAPK(this)" value="上传附件">
+    </fieldset>
+    <fieldset class="submit2 inputs">
+        <input type="button" onclick="version.add(this);" class="ui-button" style="margin-top: 5px;"
+               value="提交">
+    </fieldset>
+    <script type="text/javascript">
+    </script>
+</form>
+
+
+</div>
+</body>
+</html>

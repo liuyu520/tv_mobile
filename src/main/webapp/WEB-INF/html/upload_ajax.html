@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>upload file</title>
+    <script type="text/javascript"
+            src="../static/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript"
+            src="../static/js/ajaxfileupload.js"></script>
+    <script type="text/javascript"
+            src="../static/js/common_util.js"></script>
+    <script type="text/javascript">
+        var upload = function () {
+            var param = {};
+            param.formatTypeInvalid = "您上传的格式不正确，仅支持jpg、jpeg、png、gif、bmp,请重新选择！";
+            param.url = '/tv_mobile/upload/upload';
+            param.success = function (data, status) {
+                if (data.fullUrl) {
+                    $("img[name=photo]").attr("src", data.fullUrl);
+                    alert("上传成功");
+                } else {
+                    alert("服务器故障，稍后再试！");
+                }
+            };
+            param.error = function (data, status, e) {
+                alert(e);
+            };
+            com.whuang.hsj.ajaxUploadFile('fileUpload', param);
+
+        };
+        //初始化页面
+        $(document).ready(function (e) {
+            //选择文件框选择文件change事件
+            $("#fileUpload").change(function () {
+
+//                upload();
+                /*$.ajaxFileUpload({
+                 url: '/tv_mobile/upload/upload', //后台提交地址
+                 secureuri: false,//异步
+                 fileElementId: 'fileUpload',//上传控件ID
+                 dataType: 'json',//返回的数据信息格式
+                 type:"post", //如果带附加参数，请设置type
+                 success: , error:
+                 });*/
+            });
+
+//        }
+        })
+    </script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1">
+</head>
+<body>
+<div>
+    <form action="/tv_mobile/upload/upload" method="post" enctype="multipart/form-data">
+        <div style="margin-bottom: 20px">
+            <input type="file" name="image223" id="fileUpload">
+        </div>
+        <br>
+        <input type="submit" onclick="upload()" value="提交">
+
+    </form>
+    <br>
+    <img name="photo" src="">
+</div>
+</body>
+</html>

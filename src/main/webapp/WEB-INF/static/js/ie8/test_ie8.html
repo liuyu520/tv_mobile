@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://123.57.250.51/static/js/jquery-1.11.1.js"></script>
+    <!--[if IE 8]>
+    <script type="text/javascript"
+            src="jQuery.XDomainRequest.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="page.js"></script>
+
+    <title></title>
+    <script type="text/javascript">
+        var templateHandle = function (temp) {
+            console.log(temp);
+        };
+        var ajaxHtml4IE8 = function () {
+            xhr.ajaxHtml('cross_domain.html', $('#crossDiv'), null, null, null);
+        }
+    </script>
+</head>
+<body>
+<input type="button" value="发送ajax" onclick="ajaxHtml4IE8()">
+
+<div id="crossDiv"></div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title></title>
+    <style>
+        input[type=submit] {
+            padding: 10px 30px;
+            border: 0 none;
+            background-color: #05a1e7;
+            color: #ffffff;
+        }
+
+        input[type=file] {
+            font-size: 20px;
+            border: 0 none;
+            /*height: 50px;*/
+            /*line-height: 50px;*/
+        }
+    </style>
+    <script type="text/javascript"
+            src="../static/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript"
+            src="../static/js/common_util.js"></script>
+    <script type="text/javascript">
+        var checkUpload = function (form2) {
+            var $thisForm = $(form2);
+            var $uploadFile = $thisForm.find('input[type=file]');
+            if (!com.whuang.hsj.isHasValue($uploadFile.val())) {
+                alert("请选择要上传的文件.");
+                $uploadFile.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div>
+    <form action="../upload/upload" method="post" enctype="multipart/form-data"
+          onsubmit="return checkUpload(this);">
+        <div style="margin-bottom: 20px">
+            <input type="file" name="image223" id="fileUpload">
+        </div>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</div>
+</body>
+</html>

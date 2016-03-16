@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1">
+</head>
+<body>
+<div>
+    <embed id="yt" src="http://123.57.250.51/static/uploadvideos/abc.mp4"
+           type="application/x-shockwave-flash"
+           width="100px" height="200px"></embed>
+</div>
+<!--<div>
+    <video src="http://123.57.250.51/static/uploadvideos/abc.mp4"
+           webkit-playsinline></video>
+</div>-->
+<!--<div>
+    <iframe class="youtube-player" type="video/x-flv" width="%0.0f" height="%0.0f" src="http://123.57.250.51/static/uploadvideos/20150605112942_25720150604监利新闻（四）.flv"
+            frameborder="0">
+    </iframe>
+</div>-->
+<div id="video" class="ad-view">
+    <div class="video-frame">
+
+        <!-- A simple video element. We want to show the default controls and
+             want the video to begin playback inline (rather than fullscreen).
+             We also attach an ad-outlet so that we can easily reference this
+             element from the View Controller code -->
+        <video src="http://123.57.250.51/static/uploadvideos/abc.mp4" controls width="100%"
+               webkit-playsinline ad-outlet="video"></video>
+
+        <p>
+            The launch experience.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
