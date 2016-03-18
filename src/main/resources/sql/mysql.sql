@@ -19,3 +19,14 @@ insert into t_dictionary(groupId,key2,value,description) values('global_setting'
 insert into t_dictionary(groupId,key2,value,description) values('global_setting','uploadAbsulotePrefix','/var/www/ajl','/var/www/ajl');
 
 insert into t_dictionary(groupId,key2,value,description) values('global_setting','uploadVideoPrefix','/var/www/ajl/uploadvideos','/var/www/ajl/uploadvideos');
+
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','pushserver_ip','www.hbjltv.com','www.hbjltv.com');
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','pushserver_port','1883','1883');
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','html_static_url','http://hbjltv.com/','http://hbjltv.com/');
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','restful_api_url','http://hbjltv.com/','http://hbjltv.com/');
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','apk_download_url','','');
