@@ -47,15 +47,20 @@ public class ConfigController {
         return DictionaryParam.get("tv_config", key);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/config", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
-    public String config(Model model, HttpServletRequest request) {
+    public static Map<String, String> getConfigMap() {
         Map<String, String> configMap = new HashMap<String, String>();
         configMap.put(PUSH_SERVER_IP, getConfig("pushserver_ip"));
         configMap.put(PUSH_SERVER_PORT, getConfig("pushserver_port"));
         configMap.put(MOBILE_HTML_RESOURCES_URL, getConfig("html_static_url"));
         configMap.put(RESTFUL_API_URL, getConfig("restful_api_url"));
         configMap.put(DOWNLOAD_APK_URL, getConfig("apk_download_url"));
+        return configMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/config", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+    public String config(Model model, HttpServletRequest request) {
+        Map<String, String> configMap = getConfigMap();
         return HWJacksonUtils.getJsonP(configMap);
     }
 }

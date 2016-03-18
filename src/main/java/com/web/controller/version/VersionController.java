@@ -1,20 +1,19 @@
 package com.web.controller.version;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.common.util.SystemHWUtil;
+import com.common.util.WebServletUtil;
+import com.dict.Constant2;
+import com.io.hw.file.util.FileUtils;
+import com.io.hw.json.HWJacksonUtils;
+import com.string.widget.util.ValueWidget;
+import com.util.JSONPUtil;
+import com.view.PaperNewsView;
+import com.web.controller.comm.ConfigController;
 import oa.dao.common.CommonDictionaryDao;
 import oa.entity.common.AccessLog;
 import oa.entity.common.CommonDictionary;
 import oa.service.DictionaryParam;
 import oa.web.controller.base.BaseController;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,14 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.common.util.SystemHWUtil;
-import com.common.util.WebServletUtil;
-import com.dict.Constant2;
-import com.io.hw.file.util.FileUtils;
-import com.io.hw.json.HWJacksonUtils;
-import com.string.widget.util.ValueWidget;
-import com.util.JSONPUtil;
-import com.view.PaperNewsView;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 /***
  * apk 版本管理
  * @author Administrator
@@ -42,8 +40,9 @@ import com.view.PaperNewsView;
 @Controller
 @RequestMapping("/version")
 public class VersionController  extends BaseController {
-	private CommonDictionaryDao commonDictionaryDao;
 	public static final String GROUPID_CLIENT_VERSION="client_version";
+	private CommonDictionaryDao commonDictionaryDao;
+
 	@ResponseBody
 	@RequestMapping(value = "/add", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String add(Model model, String latestversion, String md5,String path,
@@ -100,6 +99,8 @@ public class VersionController  extends BaseController {
 			PaperNewsView view, HttpSession session,
 			HttpServletRequest request) throws IOException {
 		Map map=DictionaryParam.get(GROUPID_CLIENT_VERSION);
+		Map<String, String> configMap = ConfigController.getConfigMap();
+		map.putAll(configMap);
 		String content = HWJacksonUtils.getJsonP(map);
 		AccessLog accessLog=logInto(request);
 		accessLog.setDescription("获取版本信息");

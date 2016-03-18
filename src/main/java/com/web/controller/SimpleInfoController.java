@@ -1,22 +1,18 @@
 package com.web.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.common.dict.Constant2;
+import com.common.web.view.PageView;
+import com.entity.SimpleInfo;
+import com.string.widget.util.RegexUtil;
+import com.time.util.TimeHWUtil;
 import oa.web.controller.base.BaseController;
-
 import org.apache.commons.collections.map.ListOrderedMap;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.common.dict.Constant2;
-import com.common.web.view.PageView;
-import com.entity.BlogInfo;
-import com.entity.SimpleInfo;
-import com.time.util.TimeHWUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 /***
  * 简单的消息,不记录发布者
  * @author huangweii
@@ -59,20 +55,19 @@ public class SimpleInfoController extends BaseController<SimpleInfo>{
 			HttpServletRequest request) {
 		super.listTODO(model, view, request);
 		List list=view.getRecordList();
-		/*for(int i=0;i<list.size();i++){
+		int size = list.size();
+		for (int i = 0; i < size; i++) {
 			Object obj=list.get(i);
 			if(obj!=null && obj instanceof SimpleInfo){
 				SimpleInfo info=(SimpleInfo)obj;
 				String content=info.getInfo();
-				if(content.contains("<script>")){
-					info.setInfo(StringEscapeUtils.escapeHtml4(content));
-				}
-				
+				info.setInfo(RegexUtil.convertBr(content));
+
 			}
-		}*/
+		}
 	}
-	
-	
+
+
 	@Override
 	protected void deleteTODO(int id, SimpleInfo roleLevel, Model model,
 			HttpServletRequest request) {
