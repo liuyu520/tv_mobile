@@ -33,10 +33,10 @@ $(function () {
     if (news_sort || typeof news_sort === "number") {
         $('#type_' + news_sort).addClass('current');
     }
-    $('.header_r').click(function (event) {
+    $('.header_r').hover(function (event) {
         console.log('click');
         var $ul = $('.welcome ul');
-        $ul.toggle();
+        $ul.toggle('normal');
     })
 });
 window.onload = function () {

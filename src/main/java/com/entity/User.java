@@ -1,5 +1,7 @@
 package com.entity;
 
+import com.common.entity.user.interf.GenericUser;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "t_user")
-public class User implements Serializable{
+public class User extends GenericUser implements Serializable{
 	private static final long serialVersionUID = -7507235006701466342L;
 	private int id;
 	/***

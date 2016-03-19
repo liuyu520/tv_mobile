@@ -216,6 +216,8 @@ body {
 
 .header_r .iconExit {
     background: url('http://i.static.chanjet.com/chanjet/images/workbench/userExtMenuIcon_exit.png');
+    background-repeat: no-repeat;
+    margin-right: 5px;
 }
 .header_r i {
     float: left;
