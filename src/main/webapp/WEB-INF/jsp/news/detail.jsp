@@ -18,7 +18,7 @@
 	<title>监利县广播电视台</title>
 <meta name="keywords"
 	content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
-	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="shortcut icon"  mce_href="favicon.ico" href="/static/img/sms-4.ico">
 	<!-- STYLES -->
 	<link rel="stylesheet" type="text/css"
 		  href="<%=path%>/static/css/superfish.css" media="screen"/>

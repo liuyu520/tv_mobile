@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <title>Insert title here</title>
 <meta name="keywords" content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
-<link rel="shortcut icon" href="../favicon.ico">
+<link rel="shortcut icon" mce_href="favicon.ico" href="/static/img/sms-4.ico">
 
 <div class="column" style="margin-top: 20px;padding-left: 10px;background-color: #fff;">
 

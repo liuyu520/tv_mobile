@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="keywords" content="transition, off-canvas, navigation, effect, 3d, css3, smooth"/>
-<link rel="shortcut icon" href="../favicon.ico">
+<link rel="shortcut icon" mce_href="favicon.ico" href="/static/img/sms-4.ico">
 
 <c:choose>
     <c:when test="${view.recordList!=null && fn:length(view.recordList)!=0 }">

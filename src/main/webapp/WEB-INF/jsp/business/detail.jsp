@@ -16,7 +16,7 @@
 <title>Insert title here</title>
 <meta name="keywords"
 	content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
-<link rel="shortcut icon" href="../favicon.ico">
+<link rel="shortcut icon" mce_href="favicon.ico" href="/static/img/sms-4.ico">
 
 <!-- 新闻详情-->
 <div class="column">

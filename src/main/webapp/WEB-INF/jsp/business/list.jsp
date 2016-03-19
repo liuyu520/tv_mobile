@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="keywords"
 	content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
-<link rel="shortcut icon" href="../favicon.ico">
+<link rel="shortcut icon" mce_href="favicon.ico" href="/static/img/sms-4.ico">
 
 <%-- <script type="text/javascript" src="<%=path%>/static/js/common_util.js"></script>
 	<script type="text/javascript" src="<%=path%>/static/js/jquery-1.11.1.js"></script>
