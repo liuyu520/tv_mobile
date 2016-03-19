@@ -64,8 +64,8 @@
 
                 </c:when>
                 <c:otherwise>
-                    <div class="welcome" style="cursor: pointer">欢迎您,<span>${sessionScope.user.username}</span>
-                        <ul style="display: none;z-index: 9999; background: #FFFFFF;position: absolute;width: 80px;">
+                    <div class="welcome" style="cursor: pointer">欢迎您,<span class="head-name" >${sessionScope.user.username}</span>
+                        <ul style="display: none;z-index: 9999; background: #FFFFFF;position: absolute;width: 80px;border-radius: 3px;">
                             <li onclick="user.logout()">
                                 <i class="iconExit"></i><span>退出</span>
                             </li>

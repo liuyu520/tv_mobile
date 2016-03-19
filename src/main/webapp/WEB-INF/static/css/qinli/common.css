@@ -226,6 +226,10 @@ body {
     width: 20px;
     height: 20px;
 }
+.head-name{
+    padding-right: 10px;
+    background: url(http://www.chanjet.com/resource/images/n1.png) no-repeat right center;
+}
 .header_r:hover ul {
     display: block;
 }
