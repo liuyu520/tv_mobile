@@ -42,6 +42,10 @@ public class ConfigController {
      * apk的下载地址
      */
     public static final String DOWNLOAD_APK_URL = "apk_download_url";
+    /***
+     * Android 客户端是否启动推送服务
+     */
+    public static final String IS_START_PUSH_SERVICE = "is_start_pushservice";
 
     public static String getConfig(String key) {
         return DictionaryParam.get("tv_config", key);
@@ -54,6 +58,7 @@ public class ConfigController {
         configMap.put(MOBILE_HTML_RESOURCES_URL, getConfig("html_static_url"));
         configMap.put(RESTFUL_API_URL, getConfig("restful_api_url"));
         configMap.put(DOWNLOAD_APK_URL, getConfig("apk_download_url"));
+        configMap.put(IS_START_PUSH_SERVICE, getConfig("is_start_pushservice"));
         return configMap;
     }
 

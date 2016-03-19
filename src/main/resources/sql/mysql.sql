@@ -30,3 +30,6 @@ insert into t_dictionary(groupId,key2,value,description) values
 ('tv_config','restful_api_url','http://hbjltv.com/','http://hbjltv.com/');
 insert into t_dictionary(groupId,key2,value,description) values
 ('tv_config','apk_download_url','','');
+
+insert into t_dictionary(groupId,key2,value,description) values
+('tv_config','is_start_pushservice','true','true or false');
