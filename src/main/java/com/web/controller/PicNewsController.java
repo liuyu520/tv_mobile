@@ -1,26 +1,5 @@
 package com.web.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.AccessLog;
-import oa.service.DictionaryParam;
-import oa.web.controller.base.BaseController;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.ImageHWUtil;
 import com.common.util.PageUtil;
 import com.common.util.SortList;
@@ -34,6 +13,27 @@ import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
 import com.util.JSONPUtil;
+import oa.entity.common.AccessLog;
+import oa.service.DictionaryParam;
+import oa.web.controller.base.BaseController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /***
  * 移动端首页轮播图
  * @author huangwei
@@ -207,5 +207,17 @@ public class PicNewsController extends BaseController<PicNews> {
 	}
 	protected String getListView(){
 		return "/index";
+	}
+
+	@Override
+	protected void beforeList(PicNews picNews) {
+		picNews.setStatus(Constant2.NEWS_STATUS_ON);//额外的条件
+		super.beforeList(picNews);
+
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		AccessLog accessLog = logInto(request);
+		accessLog.setDescription("list picNews");
+		accessLog.setOperateResult("list test conditon:" + HWJacksonUtils.getJsonP(picNews));
+		logSave(accessLog, request);
 	}
 }

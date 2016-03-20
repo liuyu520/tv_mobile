@@ -29,7 +29,7 @@
                         <form class="log_f" onsubmit="return user.login_submit(this);">
                             <dl>
                                 <label for="username_login">用户名：</label>
-                                <input type="text" id="username_login" name="username">
+                                <input type="text" placeholder="用户名或手机号" id="username_login" name="username">
                             </dl>
                             <dl>
                                 <label for="psw">密码：</label>
@@ -42,7 +42,7 @@
                         <form action="" class="reg_f">
                             <dl>
                                 <label for="username">用户名：</label>
-                                <input type="text" name="username" id="username">
+                                <input type="text" placeholder="手机号" name="username" id="username">
                             </dl>
                             <dl>
                                 <label for="psw">密码：</label>
@@ -54,7 +54,7 @@
                             </dl>
                             <dl>
                                 <label for="psw">邮箱：</label>
-                                <input type="text" name="email" id="email">
+                                <input type="text" placeholder="邮箱" name="email" id="email">
                             </dl>
                             <dl class="sub_dl">
                                 <input type="button" class="login_sub" onclick="user.register(this);" value="注册">
@@ -92,7 +92,7 @@
     <ul class="nav">
         <li><a href="http://hbjltv.com">首页</a></li>
         <li><a href="<%=path%>/news/list/2">新闻</a></li>
-        <li><a href="<%=path%>/pic_news/list2?type=2&status=1">图闻</a></li>
+        <li><a href="<%=path%>/pic_news/list2?type=2">图闻</a></li>
         <li><a href="<%=path%>/video/list/1">点播</a></li>
         <li><a href="<%=path%>/video/list/2?status=1&targetView=lives/index">直播</a></li>
         <li><a href="<%=path%>/news/list/5">政务</a></li>
