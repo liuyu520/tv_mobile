@@ -33,3 +33,5 @@ insert into t_dictionary(groupId,key2,value,description) values
 
 insert into t_dictionary(groupId,key2,value,description) values
 ('tv_config','is_start_pushservice','true','true or false');
+insert into t_dictionary(groupId,key2,value,description) values
+  ('tv_config','is_aliyun_mq_ONS','true','true or false');

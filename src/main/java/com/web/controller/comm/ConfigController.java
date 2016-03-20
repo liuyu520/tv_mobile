@@ -46,6 +46,10 @@ public class ConfigController {
      * Android 客户端是否启动推送服务
      */
     public static final String IS_START_PUSH_SERVICE = "is_start_pushservice";
+    /***
+     * 是否是阿里云消息队列MQ
+     */
+    public static final String IS_ALIYUN_MQ="is_aliyun_mq_ONS";
 
     public static String getConfig(String key) {
         return DictionaryParam.get("tv_config", key);
@@ -59,6 +63,7 @@ public class ConfigController {
         configMap.put(RESTFUL_API_URL, getConfig("restful_api_url"));
         configMap.put(DOWNLOAD_APK_URL, getConfig("apk_download_url"));
         configMap.put(IS_START_PUSH_SERVICE, getConfig("is_start_pushservice"));
+        configMap.put(IS_ALIYUN_MQ, getConfig("is_aliyun_mq_ONS"));
         return configMap;
     }
 

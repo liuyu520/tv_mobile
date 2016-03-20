@@ -52,7 +52,8 @@ create table t_dictionary (
 	groupId varchar(255), 
 	key2 varchar(255), 
 	value varchar(255), 
-	primary key (id)
+	primary key (id),
+	UNIQUE KEY (groupId,key2)
 )
 
 create table t_news (
