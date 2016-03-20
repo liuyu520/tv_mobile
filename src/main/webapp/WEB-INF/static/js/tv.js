@@ -194,6 +194,18 @@ news.add_newsReply = function (self) {
     /*else {
      $thisForm =getForm(self) //$("#formNews_reply");
      }*/
+    var textarea_comment=$thisForm.find('textarea[name=comments]');
+    var comment_val=textarea_comment.val();
+    if(!comment_val){
+        $.msgbox.show({
+            message: "您还没有填写",
+            icon: 'warn',
+            timeOut: tips_timeout/*,
+             beforeHide: function(){
+             }*/
+        });
+        return;
+    }
     showMask();
     var options = {
         url: server_url + "/comment/json_add",
@@ -302,6 +314,7 @@ user.login_submit = function (self) {
                          location.reload();//刷新页面
                      }
                 });
+                $thisForm.hide();
                 location.reload();//刷新页面
                 return;
                 if ($('.log_f').css('display') != "none") {
@@ -519,6 +532,7 @@ user.logout = function (self) {
                     }
                 });
                 $loginNav.show();
+                $('div.header_r').hide();
                 $logoutNav.hide();
             } else {
                 errorMessage = "注销失败";
