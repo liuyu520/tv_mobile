@@ -18,7 +18,7 @@
 		<textarea rows="10" name="comments" placeholder="您的评论"  onkeydown="com.whuang.hsj.ctrlEnter2Submit(event,this);"
 				  required></textarea>
 	</fieldset>
-	<fieldset class="submit2 inputs">
+	<fieldset class="submit2 inputs" >
 		<input type="button" onclick="news.add_newsReply(this);" class="ui-button" style="margin-top: 5px;"
 			value="发送">
 	</fieldset>

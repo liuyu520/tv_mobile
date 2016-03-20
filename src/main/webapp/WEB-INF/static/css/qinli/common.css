@@ -227,8 +227,8 @@ body {
     height: 20px;
 }
 .head-name{
-    padding-right: 10px;
-    background: url(http://www.chanjet.com/resource/images/n1.png) no-repeat right center;
+    padding-right: 12px;
+    background: url(/static/img/n1.png) no-repeat right center;
 }
 .header_r:hover ul {
     display: block;
@@ -935,4 +935,7 @@ h5.line span {
     font-size: 14px;
     color: #666;
     font-family: "微软雅黑";
+}
+fieldset.submit2{
+    text-align: center;
 }

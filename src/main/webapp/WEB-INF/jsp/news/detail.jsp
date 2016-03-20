@@ -67,13 +67,13 @@
             </div>
         </h5>--%>
 		<div style="border-bottom: 1px solid #f38399;padding-bottom: 20px">
-			<h5>${news.title }</h5>
+			<h5 title="${news.title }" >${news.title }</h5>
 			<span style="float: right" class="little_gray">发表时间:${news.releaseTimeStr }</span>
 
 		</div>
 		<p>
 			<c:if test="${news.pic!=null && fn:length(news.pic)!=0 }">
-		<div style="text-align: center;"><img src="${news.pic }" onclick="window.open(this.src,'target')"
+		<div style="text-align: center;"><img title="点击查看原图" src="${news.pic }" onclick="window.open(this.src,'target')"
 											  style="max-width: 100%;"></div>
 		</c:if>
 		${news.content }</p>
@@ -87,7 +87,7 @@
 		<script>window._bd_share_config = {
 			"common": {
 				"bdSnsKey": {},
-				"bdText": "${fn:substring(news.splitAndFilterString,0,100) }",
+				"bdText": "${fn:substring(news.splitAndFilterString,0,90) }...",
 				"bdMini": "2",
 				"bdPic": "${news.pic }",
 				"bdStyle": "0",
