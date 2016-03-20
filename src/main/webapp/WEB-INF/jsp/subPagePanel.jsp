@@ -19,7 +19,7 @@
 <link rel="shortcut icon" mce_href="favicon.ico" href="/static/img/sms-4.ico">
 
 <!-- 遮罩层 -->
-<div id="loadPanel"></div>
+<div id="loadPanel" style="background-attachment: fixed;background-repeat: no-repeat;background-position: center;position: absolute;z-index: 99999;width: 100%;"></div>
 <!-- / 遮罩层 -->
 
 <!-- 弹出窗口层 -->
