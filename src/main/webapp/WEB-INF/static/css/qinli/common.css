@@ -65,7 +65,7 @@ textarea {
 
 body {
     color: #333;
-    font: 12px "宋体", Arial, sans-serif;
+    font: 12px "Microsoft YaHei","微软雅黑","宋体", Arial, sans-serif;
     background: #fff;
 }
 
@@ -237,7 +237,12 @@ body {
     color: #666;
     font-family: "微软雅黑";
 }
-
+.user_profile:hover{
+    background: #ddd;
+}
+.user_profile{
+    margin: 5px 5px;
+}
 .line {
     display: inline-block;
     margin: 0 6px;

@@ -37,7 +37,7 @@
 </jsp:include>
 </c:when>
           <c:otherwise>
-            <div style="text-align:center;padding-top:20px;" >
+            <div style="text-align:center;padding-top:20px;color: #999;" >
              	<!--  没有查询到符合条件的评论. -->抢个沙发吧 :)
             </div>
           </c:otherwise>

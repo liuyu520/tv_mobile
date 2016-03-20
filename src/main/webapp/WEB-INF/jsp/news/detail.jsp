@@ -15,7 +15,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>监利县广播电视台</title>
+	<title>新闻详情-监利县广播电视台</title>
 <meta name="keywords"
 	content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
 	<link rel="shortcut icon"  mce_href="favicon.ico" href="/static/img/sms-4.ico">

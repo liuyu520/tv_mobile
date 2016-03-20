@@ -66,7 +66,7 @@
                 <c:otherwise>
                     <div class="welcome" style="cursor: pointer">欢迎您,<span class="head-name" >${sessionScope.user.username}</span>
                         <ul style="display: none;z-index: 9999; background: #FFFFFF;position: absolute;width: 80px;border-radius: 3px;">
-                            <li onclick="user.logout()">
+                            <li onclick="user.logout()" class="user_profile" >
                                 <i class="iconExit"></i><span>退出</span>
                             </li>
                         </ul>
@@ -99,7 +99,7 @@
         <li><a href="<%=path%>/news/list/6">民生</a></li>
         <li><a href="<%=path%>/news/list/3">监利</a></li>
         <li><a href="<%=path%>/news/list/4">商讯</a></li>
-        <li><a href="<%=path%>/news/list/1?status=1">报料</a></li>
+        <li><a href="<%=path%>/news/list/1">报料</a></li>
         <li><a href="<%=path%>/bbs/list">论坛</a></li>
         <li><a href="<%=path%>/html/more.html" target="_blank">爱监利</a></li>
     </ul>
