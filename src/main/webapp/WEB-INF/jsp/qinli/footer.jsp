@@ -24,6 +24,6 @@
 
             <p>由北京北极环影科技有限公司提供技术支持</p>
         </div>
-        <p class="copyright">Copyright 2015. All Rights Reserved</p>
+        <p class="copyright">Copyright 2016. All Rights Reserved</p>
     </div>
 </div>
