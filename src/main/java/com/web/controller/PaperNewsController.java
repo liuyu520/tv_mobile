@@ -1,5 +1,7 @@
 package com.web.controller;
 
+import com.bean.news.NewsDetail;
+import com.bean.news.NewsListItem;
 import com.common.util.PageUtil;
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
@@ -27,6 +29,7 @@ import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
 import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,10 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @RequestMapping("/news")
@@ -57,30 +57,39 @@ public class PaperNewsController extends BaseController<PaperNews> {
 				Constant2.SIMPLEFILTER_JACKSON_PAPERNEWS, theFilter);
 		return HWJacksonUtils.getJsonP(map, callback, filters);
 	}
-	
+
+	private static String getTypeTitle(Integer type, String title) {
+		switch (type) {
+			case Constant2.TYPE_NEWS:
+				title = "新闻";
+				break;
+			case Constant2.TYPE_TIPS:
+				title = "报料";
+				break;
+			case Constant2.TYPE_JIANLI:
+				title = "监利";
+				break;
+			case Constant2.TYPE_BUSINESS:
+				title = "商讯";
+				break;
+			case Constant2.TYPE_GOVERNMENT:
+				title = "政务";
+				break;
+			case Constant2.TYPE_PEOPLE:
+				title = "民生";
+				break;
+			default:
+				break;
+		}
+		return title;
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/json", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String json(Model model, Integer type, Integer status,Integer sort,Integer userId,
 			PaperNewsView view, HttpSession session,
 			HttpServletRequest request, String callback) throws IOException {
-		init(request);
-		Map map = new HashMap();
-		Map condition = new HashMap();
-		if (type != null) {
-			condition.put("type", type);
-		}
-		if (status != null) {
-			condition.put("status", status);
-		}
-		if (sort != null) {
-			condition.put("sort", sort);
-		}
-		if (userId != null) {//添加报料的用户
-			condition.put("userId", userId);
-		}
-		ListOrderedMap orderColumnModeMap=getListOrderBy();
-
-		PageUtil.paging(condition, view, getDao(),null,orderColumnModeMap);
+		Map map = queryNewsList(type, status, sort, userId, view, request);
 		/*
 		 * List data = view.getRecordList();
 		 * map.put(Constant2.JSON_RETURN_CURRENTPAGE, view.getCurrentPage());
@@ -109,28 +118,7 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		if(type==null){//default value
 			type=Constant2.TYPE_NEWS;
 		}
-		switch (type) {
-		case Constant2.TYPE_NEWS:
-			title="新闻";
-			break;
-		case Constant2.TYPE_TIPS:
-			title="报料";
-			break;
-		case Constant2.TYPE_JIANLI:
-			title="监利";
-			break;
-		case Constant2.TYPE_BUSINESS:
-			title="商讯";
-			break;
-		case Constant2.TYPE_GOVERNMENT:
-			title="政务";
-			break;
-		case Constant2.TYPE_PEOPLE:
-			title="民生";
-			break;
-		default:
-			break;
-		}
+		title = getTypeTitle(type, title);
 		if(!ValueWidget.isNullOrEmpty(accessLog)){
 			accessLog.setDescription("手机端"+title+"列表");
 			accessLog.setOperateResult("总条数:"+view.getTotalRecords());
@@ -139,6 +127,72 @@ public class PaperNewsController extends BaseController<PaperNews> {
 
 		content = HWJacksonUtils.getJsonP(map, callback, filters);
 		return content;
+	}
+
+	public NewsListItem parsePaperNews(PaperNews paperNews) {
+		NewsListItem newsListItem = new NewsListItem();
+		newsListItem.setDate(paperNews.getReleaseTimeStr());
+		newsListItem.setTitle(paperNews.getTitle());
+		newsListItem.setNewsType(String.valueOf(paperNews.getSort()));
+		newsListItem.setUrl("/app/json_detail/" + paperNews.getId());
+		return newsListItem;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/list/json", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+	public String listJson(Model model, Integer type, Integer status, Integer sort, Integer userId,
+						   PaperNewsView view, HttpSession session,
+						   HttpServletRequest request, String callback) throws IOException {
+		Map map = queryNewsList(type, status, sort, userId, view, request);
+
+
+		setJsonPaging(map, view);
+		List<NewsListItem> newsListItems = new ArrayList<NewsListItem>();
+		int length2 = view.getRecordList().size();
+		for (int i = 0; i < length2; i++) {
+			PaperNews paperNews = (PaperNews) view.getRecordList().get(i);
+			newsListItems.add(parsePaperNews(paperNews));
+		}
+		String content;
+		FilterProvider filters = simpleFilterProvider.addFilter(
+				Constant2.SIMPLEFILTER_JACKSON_PAPERNEWS, theFilter);
+
+		AccessLog accessLog = logInto(request);
+		String title = null;
+		if (type == null) {//default value
+			type = Constant2.TYPE_NEWS;
+		}
+		/*title = getTypeTitle(type, title);
+		if(!ValueWidget.isNullOrEmpty(accessLog)){
+			accessLog.setDescription("手机端"+title+"列表");
+			accessLog.setOperateResult("总条数:"+view.getTotalRecords());
+			logSave(accessLog, request);
+		}*/
+
+		content = HWJacksonUtils.getJsonP(newsListItems, callback, filters);
+		return content;
+	}
+
+	private Map queryNewsList(Integer type, Integer status, Integer sort, Integer userId, PaperNewsView view, HttpServletRequest request) {
+		init(request);
+		Map map = new HashMap();
+		Map condition = new HashMap();
+		if (type != null) {
+			condition.put("type", type);
+		}
+		if (status != null) {
+			condition.put("status", status);
+		}
+		if (sort != null) {
+			condition.put("sort", sort);
+		}
+		if (userId != null) {//添加报料的用户
+			condition.put("userId", userId);
+		}
+		ListOrderedMap orderColumnModeMap = getListOrderBy();
+
+		PageUtil.paging(condition, view, getDao(), null, orderColumnModeMap);
+		return map;
 	}
 
 	@ResponseBody
@@ -198,6 +252,30 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		accessLog.setDescription("手机端"+title+"详情,id:"+id);
 		logSave(accessLog, request);
 		return content;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/app/json_detail/{id}", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+	public String appJsonDetail(Model model, @PathVariable int id/*新闻的id*/,
+								PaperNewsView view, HttpSession session,
+								HttpServletRequest request, String callback) throws IOException {
+		init(request);
+		PaperNews news = (PaperNews) getDao().get(id);
+		String content;
+
+		String title = null;
+		if (news.getType() == Constant2.TYPE_NEWS) {
+			title = "新闻";
+		} else {
+			title = "报料";
+		}
+		NewsDetail newsDetail = new NewsDetail();
+		newsDetail.setId(news.getId());
+		newsDetail.setNewsDetailsBody(news.getContent());
+		newsDetail.setNewsDetailsTitle(news.getTitle());
+		newsDetail.setNewsType(news.getSort());
+		newsDetail.setNewsDetailsCreateDate(TimeHWUtil.formatDateTime(news.getReleaseTime()));
+		return HWJacksonUtils.getJsonP(newsDetail);
 	}
 	@ResponseBody
 	@RequestMapping(value = "/json_add_tips", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)

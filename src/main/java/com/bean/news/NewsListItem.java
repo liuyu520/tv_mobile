@@ -40,10 +40,19 @@ public class NewsListItem {
         this.newsType = newsType;
     }
 
+    /***
+     * 新闻详情的接口地址
+     *
+     * @return
+     */
     public String getUrl() {
         return url;
     }
 
+    /***
+     * 新闻详情的接口地址
+     * @param url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
