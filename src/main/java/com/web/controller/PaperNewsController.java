@@ -33,6 +33,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +87,11 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		return title;
 	}
 
+	private static String getNewsDetailUrl(HttpServletRequest request, int newsId) {
+		String serverUrl = request.getRequestURL().toString().replaceAll("(https?://[^/]+)/.*$", "$1") + request.getContextPath();
+		return (serverUrl + "/news/app/json_detail/" + newsId);
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/json", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String json(Model model, Integer type, Integer status,Integer sort,Integer userId,
@@ -135,16 +142,17 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		newsListItem.setDate(paperNews.getReleaseTimeStr());
 		newsListItem.setTitle(paperNews.getTitle());
 		newsListItem.setNewsType(String.valueOf(paperNews.getSort()));
-		newsListItem.setUrl("/app/json_detail/" + paperNews.getId());
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		newsListItem.setUrl(getNewsDetailUrl(request, paperNews.getId()));//"/app/json_detail/" + paperNews.getId()
 		return newsListItem;
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/list/json", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
-	public String listJson(Model model, Integer type, Integer status, Integer sort, Integer userId,
+	public String listJson(Model model, Integer type, Integer status, Integer newsType, Integer userId,
 						   PaperNewsView view, HttpSession session,
 						   HttpServletRequest request, String callback) throws IOException {
-		Map map = queryNewsList(type, status, sort, userId, view, request);
+		Map map = queryNewsList(type, status, newsType, userId, view, request);
 
 
 		setJsonPaging(map, view);
@@ -235,7 +243,7 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		if(type==2){//新闻
 			comment_type=Constant2.COMMENT_TARGET_TYPE_NEWS;
 		}else if(type==1){
-			
+
 		}*/
 		String title=null;
 		if(news.getType()==Constant2.TYPE_NEWS){
@@ -275,8 +283,7 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		newsDetail.setNewsDetailsBody(news.getContent());
 		newsDetail.setNewsDetailsTitle(news.getTitle());
 		newsDetail.setNewsType(news.getSort());
-		String serverUrl = request.getRequestURL().toString().replaceAll("(https?://[^/]+)/.*$", "$1") + request.getContextPath();
-		newsDetail.setNewsDetailsUrl(serverUrl + "/news/app/json_detail/" + news.getId());
+		newsDetail.setNewsDetailsUrl(getNewsDetailUrl(request, news.getId()));
 		newsDetail.setNewsDetailsCreateDate(TimeHWUtil.formatDateTime(news.getReleaseTime() * 1000));
 		Admin admin = news.getReleaseAdmin();
 		String author = null;
@@ -288,6 +295,7 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		newsDetail.setNewsDetailsAuthor(author);
 		return HWJacksonUtils.getJsonP(newsDetail);
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/json_add_tips", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String jsonAddTips(Model model, PaperNews paperNews,
