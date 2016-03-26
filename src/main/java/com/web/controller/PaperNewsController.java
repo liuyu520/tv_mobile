@@ -8,6 +8,7 @@ import com.common.util.WebServletUtil;
 import com.common.web.view.PageView;
 import com.dao.NewsCommentDao;
 import com.dict.Constant2;
+import com.entity.Admin;
 import com.entity.NewsComment;
 import com.entity.PaperNews;
 import com.entity.User;
@@ -274,7 +275,17 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		newsDetail.setNewsDetailsBody(news.getContent());
 		newsDetail.setNewsDetailsTitle(news.getTitle());
 		newsDetail.setNewsType(news.getSort());
-		newsDetail.setNewsDetailsCreateDate(TimeHWUtil.formatDateTime(news.getReleaseTime()));
+		String serverUrl = request.getRequestURL().toString().replaceAll("(https?://[^/]+)/.*$", "$1") + request.getContextPath();
+		newsDetail.setNewsDetailsUrl(serverUrl + "/news/app/json_detail/" + news.getId());
+		newsDetail.setNewsDetailsCreateDate(TimeHWUtil.formatDateTime(news.getReleaseTime() * 1000));
+		Admin admin = news.getReleaseAdmin();
+		String author = null;
+		if (null != admin) {
+			author = admin.getUsername();
+		} else {
+			author = SystemHWUtil.EMPTY;
+		}
+		newsDetail.setNewsDetailsAuthor(author);
 		return HWJacksonUtils.getJsonP(newsDetail);
 	}
 	@ResponseBody
