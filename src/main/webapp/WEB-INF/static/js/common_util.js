@@ -2804,6 +2804,7 @@ com.whuang.hsj.drag = function ($obj, hn) {
     } else {
         $hn = $obj.find("h2");
     }
+	$hn&&$hn.css("cursor", 'move');
     $hn.on({
         mousedown: function (e) {
             e.preventDefault();
@@ -3491,5 +3492,24 @@ var isMobile=function (mobile) {
 var isContainBlank= function (str) {
 	return /\s/g.test(str);
 }
-
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+       return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() ||      isMobile.Opera() || isMobile.Windows());
+    }
+};
 
