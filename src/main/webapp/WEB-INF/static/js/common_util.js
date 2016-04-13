@@ -2793,7 +2793,7 @@ com.whuang.hsj.drag = function ($obj, hn) {
         return;
     }
     if (typeof  $obj == 'string') {//when $obj is a string
-		if (!com.whuang.hsj.startsWith('#')) {
+		if (!com.whuang.hsj.startsWith($obj,'#')&&(!com.whuang.hsj.startsWith($obj,'.'))) {
 			$obj = '#' + $obj;
 		}
         $obj = $($obj);
