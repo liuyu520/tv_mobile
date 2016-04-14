@@ -1,0 +1,93 @@
+
+table{
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+table.dictionaryList{
+    width: 100%;
+}
+
+
+table.add tr td input.submit{
+    width: 120px;
+    margin-right: 20px;
+}
+table.detail tr td.theader {
+    color: #333;
+    font-weight: bolder;
+}
+table.detail tr td{
+    height: 30px;
+   
+}
+table.dictionaryList td{
+	 text-overflow: ellipsis;
+	 white-space: nowrap;
+    overflow: hidden;
+}
+
+table.detail,table.add{
+    background-color: rgba(255, 220, 220, 0.9);
+}
+a.hrefClass{
+	color: blue;
+	text-decoration: underline;
+}
+a.hrefClass:hover{
+	cursor: pointer;
+}
+
+#previewPanel {
+	overflow-y: auto;
+	overflow-x: auto;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 99996;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#subPagePanel {
+	overflow-y: auto;
+	overflow-x: auto;
+	width: 1000px;
+	top: 0px;
+	left: 5px;
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.8);
+	z-index: 99996;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: none;
+}
+#dialogContent{
+	border-left: 2px solid #f38399;
+	border-right:2px solid #f38399;
+	border-bottom:2px solid #f38399;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#subPagePanel h2{
+	background-color: #B0D2FF;
+	height: 50px;
+	line-height: 50px;
+	margin: 0;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-left: 2px solid #f38399;
+	border-right:2px solid #f38399;
+	border-top:2px solid #f38399;
+}
+#subPagePanel img{
+	cursor:pointer;
+}
+table.dictionaryList tr:nth-child(2n+2){
+	background-color:#defcfe;
+}
+table.dictionaryList tr:nth-child(n+2):hover
+{
+	background-color: #B0D2FF;
+}
