@@ -98,7 +98,7 @@
             </tr>
              <tr>
                 <td class="header" >description</td>
-                <td colspan="2" ><input type="text"  name="description"  placeholder="请填写description"  > </td>
+                <td colspan="2" ><input style="width: 400px;" type="text"  name="description"  placeholder="请填写description"  > </td>
             </tr>
               <tr>
                 <td colspan="2" style="text-align: center" ><input class="submit" type="submit" value="提交" > 
