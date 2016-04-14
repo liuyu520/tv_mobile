@@ -2,6 +2,14 @@
  * Created by huangweii on 2015/5/25.
  * see @ http://blog.csdn.net/hw1287789687/article/details/46654719
  */
+if (window.console === undefined) {
+    console = {
+        log: function () {
+        }, info: function () {
+        }, debug: function () {
+        }
+    };
+}
 $.fn.setCursorPosition = function (option) {
     var settings = $.extend({
         index: 0
@@ -33,6 +41,72 @@ $.fn.setCursorPosition = function (option) {
         }, 10)
     })
 };
+var trim = function (str) { //
+    if (typeof str === "object") {
+        return str;
+    }
+    if (str == null || str == "" || str == undefined) {
+        return str;
+    }
+    if (typeof str === "number") {
+        return str;
+    }
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+};
+
+var startsWith = function (str, regex) {
+    if (regex == undefined || str == undefined || (!str) || (!regex)) {
+        return false;
+    }
+    return str.indexOf(regex) == 0;
+};
+/***
+ * convert Decimal str into hex(must be two bit,eg:02,f5)<br>
+ *     '153'-->99
+ * @param str
+ */
+var to2Hex = function to2Hex(str) {
+    var hex = parseInt(str).toString(16);
+    if (hex.length === 1) {
+        hex = '0' + hex;
+    }
+    return hex;
+};
+var cssColor2Hex = function (cssColor) {
+    var stringObj = cssColor.replace(/RGB[\s]*\(([\w,\s]+)\)[\s]*/i, "$1");
+    //console.log(stringObj);
+    var arr = stringObj.split(',');
+    var r = trim(arr[0]);
+    var g = trim(arr[1]);
+    var b = trim(arr[2]);
+    var rHex = to2Hex(r);
+    var gHex = to2Hex(g);
+    var bHex = to2Hex(b);
+    return (rHex + gHex + bHex);
+};
+/***
+ *
+ * @param hexColor : #ccc
+ * @param cssColor : [string]rgb(153, 153, 153)
+ * @returns {boolean}
+ */
+var compareColor = function compareColor(hexColor/*#789*/, cssColor/*rgb(153, 153, 153)*/) {
+    if (typeof cssColor !== 'string') {
+        return false;
+    }
+    if (hexColor === cssColor) {//IE8,jquery.css('color') will get '#ddd',but 'rgb(204, 204, 204)'
+        return true;
+    }
+    if (startsWith(hexColor, '#')) {
+        hexColor = hexColor.substr(1);//delete '#' in front
+    }
+    if (hexColor.length == 3) {//'789'-->'778899'
+        hexColor = hexColor.substr(0, 1) + hexColor.substr(0, 1)
+            + hexColor.substr(1, 1) + hexColor.substr(1, 1) + hexColor.substr(2, 1) + hexColor.substr(2, 1);
+    }
+    var cssResult = cssColor2Hex(cssColor);
+    return (cssResult === hexColor);
+};
 /**
  * PlaceHolder组件
  * $(input).placeholder({
@@ -47,24 +121,50 @@ $.fn.setCursorPosition = function (option) {
  */
 $.fn.placeholder = function (option, callback) {
     var settings = $.extend({
-        word: '',
-        color: '#ccc',
-        evtType: 'focus',
+        word: '', /*默认提示语,即文本框默认显示文字,例如"请输入密码" */
+        color: '#ccc', /*默认提示语的字体颜色,即默认显示文字的颜色 */
+        evtType: 'focus', /* 表示聚焦时默认提示语才消失 */
         maxLen: 0, /*文本框可输入的最长字符个数,0表示无限制  */
         minLen: 0, /*文本框输入的最短字符个数,0表示无限制  */
         normalFontColor: undefined, /* 正常输入文字时的字体颜色 */
-        errorBorderClass: undefined,
+        errorBorderClass: undefined, /*发生错误时生效的class*/
         keyup_callback: undefined,
-        blur_callback: undefined,
-        focus_callback: undefined,
-        click_callback: undefined,
-        keydown_callback: undefined
+        blur_callback: undefined, /*失效焦点的回调函数*/
+        focus_callback: undefined, /*获得焦点的回调函数*/
+        click_callback: undefined, /*单击事件的回调函数*/
+        keydown_callback: undefined,
+        isNumber: undefined, /* 是否是数字 */
+        numberDefaultValue: '0', /*如果是数字,该属性才有效*/
+        necessary: false, /*是否是必需,若是必需,则不能为空 */
+        parentInputFocusClass: undefined/* 文本框父元素的class,默认为"inputFocus",用于文本框聚焦时,×一定显示,css形如.inputFocus i.inputClearBtn{
+         display: block;
+         } */,
+        isAdapterInputclean: false/*默认值为false,不支持inputclean,只有当为true时上述参数parentInputFocusClass 才有效*/
     }, option);
+
+
+    /***
+     * 判断是否是默认提示语
+     * @returns {boolean}
+     */
+    var isDefaultPlaceHolder = function ($that) {
+        var txt = $that.val();
+        if (txt == settings.word) {
+            var color2 = $that.css('color');
+            if (compareColor(settings.color, color2)) {//判断此刻输入框字体的颜色是不是placehold的颜色(灰色)
+                return true;
+            }
+        }
+        return false;
+    };
 
     function bootstrap($that) {
         // some alias
         var word = settings.word;
+        $that.data('placeholder_val_custom', word);//用于判断当前文本框中的内容是否是placeholder
+        $that.data('placeholder_color_custom', settings.color);//用于判断当前文本框中的内容是否是placeholder
         var color = settings.color;
+        /* 默认提示语的字体颜色 */
         var evtType = settings.evtType;
         if (settings.maxLen) {
             $that.attr('maxlength', settings.maxLen);
@@ -116,22 +216,59 @@ $.fn.placeholder = function (option, callback) {
                 if (settings.errorBorderClass !== undefined) {//必须设置了settings.errorBorderClass,才执行removeClass
                     $that.removeClass(settings.errorBorderClass);
                 }
+                if (settings.isAdapterInputclean && settings.parentInputFocusClass) {
+                    var $li = $that.parent();
+                    if (!$li.hasClass(settings.parentInputFocusClass)) {
+                        $li.addClass(settings.parentInputFocusClass);
+                    }
+                }
+                if (settings.necessary) {
+                    if (!txt) {
+                        if ($that.hasClass(settings.errorBorderClass)) {
+                            $that.removeClass(settings.errorBorderClass);
+                        }
+                    }
+                }
                 if (evtType == 'focus' && settings.focus_callback && typeof settings.focus_callback === 'function') {
                     e = e || window.event || arguments.callee.caller.arguments[0];
-                    settings.focus_callback(e);
+                    settings.focus_callback(e, this);
+                }
+                //聚焦时,若文本框中的值是settings.numberDefaultValue ,则清空文本框
+                if (settings.isNumber !== undefined && settings.isNumber && settings.numberDefaultValue) {
+                    if ($that.val() && $that.val() == settings.numberDefaultValue) {
+                        $that.val('');
+                    }
                 }
             }).bind('blur', function (e) {
                 var txt = $that.val();
                 if (txt == '') {
+                    //失去焦点时,若文本框中的值为空,则设置文本框值为settings.numberDefaultValue
+                    if (settings.isNumber !== undefined && settings.isNumber && settings.numberDefaultValue) {
+                        $that.val(settings.numberDefaultValue);
+                    } else {
                     switchStatus(false)
+                }
+                }
+                if (settings.isAdapterInputclean && settings.parentInputFocusClass) {
+                    var $li = $that.parent();
+                    $li.removeClass(settings.parentInputFocusClass);
+                }
+                if (settings.necessary) {
+                    if (!txt) {
+                        if (!$that.hasClass(settings.errorBorderClass)) {
+                            $that.addClass(settings.errorBorderClass);
+                        }
+                    }
                 }
                 if (settings.blur_callback && typeof settings.blur_callback === 'function') {
                     e = e || window.event || arguments.callee.caller.arguments[0];
-                    settings.blur_callback(e);
+                    settings.blur_callback(e, this);
                 }
                 if (settings.minLen !== 0 && settings.errorBorderClass !== undefined && txt.length < settings.minLen) {
                     //文本框的字符个数不满足最小要求
+                    if (!$that.hasClass(settings.errorBorderClass)) {
                     $that.addClass(settings.errorBorderClass);
+                }
                 }
             })
         }
@@ -154,16 +291,28 @@ $.fn.placeholder = function (option, callback) {
         } else if (evtType == 'keydown') {
             asKeydown();
         }
+        /***
+         * true:禁止默认事件
+         * <br>false:不用禁止默认事件
+         * @param maxLength2
+         * @returns {boolean}
+         */
         var maxLengthDeal = function (maxLength2) {
             if (typeof maxLength2 === 'number' && maxLength2 !== 0) {
                 $that.blur();
                 var val = $that.val();
+                if (isDefaultPlaceHolder($that)) {
+                    $that.focus();
+                    return false;
+                }
                 $that.focus();
                 if (val.length > maxLength2) {
                     $that.val(val.substr(0, maxLength2));
                     $that.focus();
+                    return true;
                 }
             }
+            return false;
         };
         // keydown事件里处理placeholder
         $that.keydown(function (e) {
@@ -177,7 +326,7 @@ $.fn.placeholder = function (option, callback) {
             maxLengthDeal(settings.maxLen);
             if (settings.keydown_callback && typeof settings.keydown_callback === 'function') {
                 e = e || window.event || arguments.callee.caller.arguments[0];
-                settings.keydown_callback(e);
+                settings.keydown_callback(e, this);
             }
 
         }).keyup(function (e) {
@@ -189,7 +338,13 @@ $.fn.placeholder = function (option, callback) {
             maxLengthDeal(settings.maxLen);
             if (settings.keyup_callback && typeof settings.keyup_callback === 'function') {
                 e = e || window.event || arguments.callee.caller.arguments[0];
-                settings.keyup_callback(e);
+                settings.keyup_callback(e, this);
+            }
+        }).keypress(function () {
+            //console.log('keypress');
+            if (maxLengthDeal(settings.maxLen)) {
+                event.returnValue = false;
+                return false;
             }
         });
         $that.bind('click', function () {
@@ -207,7 +362,7 @@ $.fn.placeholder = function (option, callback) {
             }
             if (settings.click_callback && typeof settings.click_callback === 'function') {
                 e = e || window.event || arguments.callee.caller.arguments[0];
-                settings.click_callback(e);
+                settings.click_callback(e, this);
             }
         })
     }
@@ -218,3 +373,47 @@ $.fn.placeholder = function (option, callback) {
         if ($.isFunction(callback)) callback($elem)
     })
 };
+(function ($) {
+    /***
+     * 用于适配placeholder插件
+     * @param v
+     * @returns {*}
+     */
+    $.fn.textVal = function () {
+        var defaultValue = this.data('placeholder_val_custom');
+        var val = this.val();
+        if (val && defaultValue && defaultValue == val) {
+            var placeholderColor = this.data('placeholder_color_custom');
+            var color2 = $(this).css('color');
+            if (compareColor(placeholderColor, color2)) {
+                return '';
+            }
+        }
+        //$('#myDiv').html(this.data('placeholder_color_custom'));
+        return val;
+    };
+    /***
+     * 清空应用了placeholder插件的文本框
+     * @returns {jQuery}
+     */
+    $.fn.clearVal = function () {
+        this.each(function () {//this.value.length;
+            var $that = $(this);
+            var defaultValue = $that.data('placeholder_val_custom');
+            var placeholderColor = $that.data('placeholder_color_custom');
+            var val = $that.val();
+            if (val) {
+                if (defaultValue && placeholderColor) {
+                    var color2 = $($that).css('color');
+                    if (!compareColor(placeholderColor, color2)) {
+                        $that.css({color: placeholderColor}).val(defaultValue);
+                    }
+                } else {
+                    $that.val('');
+                }
+            }
+        });//each
+
+        return this;
+    }
+})(jQuery);
