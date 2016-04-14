@@ -18,7 +18,7 @@
 <title>字典列表</title>
 <meta name="keywords" content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />
 <link rel="shortcut icon" href="../favicon.ico">
-<link rel="stylesheet" type="text/css" media="all" href="<%=path%>/static/css/global.css">
+<link rel="stylesheet" type="text/css" media="all" href="<%=path%>/static/css/dictionary.css">
 	<script type="text/javascript" src="<%=path%>/static/js/common_util.js"></script>
 	<script type="text/javascript" src="<%=path%>/static/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="<%=path%>/static/js/jquery.form.js"></script>
@@ -58,10 +58,10 @@
 <c:choose>
 	<c:when test="${view.recordList!=null && fn:length(view.recordList)!=0 }">
 	<table  class="dictionaryList" border="1" >
-		<tr> <th>ID</th><th>grouid</th><th>key</th><th>value</th><th>description</th> <th>操作</th></tr>
+		<tr> <th>ID</th><th>grouid</th><th>key</th><th>value</th><th style="width:200px" >description</th> <th>操作</th></tr>
 	<c:forEach var="dictionary" items="${view.recordList}" varStatus="status">
 
-	<tr><td>${dictionary.id}</td> <td>${dictionary.groupId}</td><td>${dictionary.key2}</td><td>${dictionary.value}</td><td>${dictionary.description}</td>
+	<tr><td>${dictionary.id}</td> <td>${dictionary.groupId}</td><td>${dictionary.key2}</td><td>${dictionary.value}</td><td title="${dictionary.description}" >${dictionary.description}</td>
 <td> <a class="hrefClass" 
 						onclick="ajaxDetail(${dictionary.id });" title="查看详细信息"  >详情</a>|
 <a class="hrefClass" 
@@ -87,7 +87,7 @@
     </c:choose>
 </div>
 <div id="subPagePanel">
-<h2>数据字典<img onclick="closeDetailPanel();" class="" style="margin-top: 1px;float:right;width:50px;" title="关闭" src="<%=path%>/static/images/new/close.png"></h2>
+<h2>数据字典<img onclick="closeDetailPanel();" class="" style="margin-top: 1px;float:right;width:50px;" title="关闭" src="<%=path%>/static/img/new/close.png"></h2>
 <div id="dialogContent" ><!-- <img style="margin:500px;width:50px" src="<%=path%>/static/images/loading/progress.gif"> --></div>
 
 </div>

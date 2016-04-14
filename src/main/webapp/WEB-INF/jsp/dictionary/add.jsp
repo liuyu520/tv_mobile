@@ -77,7 +77,7 @@
 	</script>
 </head>
 <body>
-    <a href="list" >字典列表</a>&nbsp;
+    <a href="list?recordsPerPage=50" >字典列表</a>&nbsp;
     <c:if test="${isEdit!=null &&  fn:length(isEdit)!=0}" >
       <a href="add" >增加字典</a>
   </c:if>
