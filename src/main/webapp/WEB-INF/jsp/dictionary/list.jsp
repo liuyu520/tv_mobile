@@ -55,6 +55,7 @@
     </c:when>
         <c:otherwise>
 	<a  href="add" >增加字典</a>&nbsp;
+            &nbsp;<a href="../refresh/refresh" >刷新数据字典</a>
 <c:choose>
 	<c:when test="${view.recordList!=null && fn:length(view.recordList)!=0 }">
 	<table  class="dictionaryList" border="1" >
