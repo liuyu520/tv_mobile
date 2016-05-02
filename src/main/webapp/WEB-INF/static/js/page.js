@@ -834,7 +834,7 @@ function loadJs(url, callback) {
 };
 function loadJS2(url, callback) {
     var script = document.createElement('script');
-    script.type = 'text/javascript';
+    script.type = 'text/javascript';//do not use 'application/javascript',because Low version of the browser is not compatible
     script.charset = "utf-8";
     if (script.readyState) {  // 兼容IE的旧版本
         script.onreadystatechange = function () {
@@ -860,7 +860,7 @@ function xhrLoadJS(url, callback) {
         if (xhr.readyState == 4) {
             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304/*页面未修改*/) {
                 var script = document.createElement('script');
-                script.type = 'text/script';
+                script.type = 'text/script';//do not use 'application/javascript',because Low version of the browser is not compatible
                 script.charset = "utf-8";
                 script.text = xhr.responseText;
                 eval(xhr.responseText);  // 执行代码
@@ -1056,7 +1056,7 @@ formAjaxHtml = function (url, jqueryObj, form) {
     if (form) {
         form.ajaxSubmit(options);
     }
-}
+};
 function updateHtml(jqueryObj, html2) {
     jqueryObj.html(html2);
     hideLoadPanel();
