@@ -69,9 +69,8 @@ function toPageGo(action) {
     // 转向页大于总页数
     if (currentPage > totalPages || currentPage <= 0 && totalPages != 0) {
         // $("#view\\.currentPage").val(totalPages);
-        // 符策鹏
         var msg = "页码不存在，请重新输入！";
-        if (jAlert) {
+        if (window.jAlert) {
             jAlert(msg);
         } else {
             alert(msg);
@@ -973,6 +972,10 @@ ajaxHtml = function (url, jqueryObjParam, data, callback) {
                     jqueryObjParam.$dialogPanel.css("position", 'fixed');//保证固定在可视范围内
                 });
 
+            } else {
+                if (argument_length > 3 && callback) {
+                    callback();
+                }
             }
             var $formInput = jqueryObj.find('textarea:first');//让subContent 中的textarea聚焦
             if ($formInput.length != 0) {//先判断能不能获取到textarea
