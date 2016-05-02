@@ -13,8 +13,10 @@ function toPageFirst($form, action) {
         if ($form.find("#view\\.totalPages").val() >= 1) {
             $currentPage.val(1);
         }
+        if(action && typeof action === 'function'){
+            action();
+        }
 
-        action();
     }
 }
 // 符策鹏 修改view.currentPage为view.thisPage 2013/7/25
@@ -29,7 +31,9 @@ function toPagePre($form, action) {
         if (pageNumber >= 0) {
             $form.find("#view\\.currentPage").val(pageNumber);
         }
-        action();
+        if(action && typeof action === 'function'){
+            action();
+        }
     }
 }
 // 符策鹏 修改view.currentPage为view.thisPage 2013/7/25
@@ -48,7 +52,9 @@ function toPageLast($form, action) {
     if ($currentPage.val() != $totalPages.val()) {
         //$("#form")[0].reset();
         $currentPage.val($totalPages.val());
-        action();
+        if(action && typeof action === 'function'){
+            action();
+        }
     }
 }
 resetCurrentPage = function () {
@@ -79,8 +85,22 @@ function toPageGo(action) {
     } else {
         $("#view\\.currentPage").val(currentPage);
     }
-    action();
+    if(action && typeof action === 'function'){
+        action();
+    }
 }
+/***
+ * 获取节点的标签名称,比如INPUT,SPAN,DIV,IMG
+ * @param domNode
+ * @returns {string|*}
+ */
+var getTagName=function (domNode) {
+    var tagNameTmp=domNode.tagName||domNode.localName;
+    if(!tagNameTmp){
+        tagNameTmp=domNode.nodeName;//兼容IE8
+    }
+    return tagNameTmp;
+};
 function checkedAll(event) {
     var obj = event.srcElement ? event.srcElement : event.target;
     var nodeList = document.getElementsByName("checked");
@@ -97,7 +117,7 @@ function checkedAll(event) {
 
 function dataListOnMouseOver(event) {
     var obj = event.srcElement ? event.srcElement : event.target;
-    if (obj.tagName == "INPUT") {
+    if (getTagName(obj) == "INPUT") {
         obj = obj.parentNode;
     }
     obj.parentNode.style.cursor = "pointer";
@@ -106,7 +126,7 @@ function dataListOnMouseOver(event) {
 
 function dataListOnMouseOut(event) {
     var obj = event.srcElement ? event.srcElement : event.target;
-    if (obj.tagName == "INPUT") {
+    if (getTagName(obj) == "INPUT") {
         obj = obj.parentNode;
     }
     obj.parentNode.style.backgroundColor = '#e5f1f4';
@@ -116,15 +136,16 @@ function dataListOnMouseOut(event) {
 function clickCheckedData(event) {
     var obj = event.srcElement ? event.srcElement : event.target;
 
-    if (obj.tagName == "INPUT") {
+    var tagName=getTagName(obj);
+    if (tagName == "INPUT") {
         return false;
     }
     obj = obj.parentNode.firstChild;
-    while (!obj.tagName) {
+    while (!tagName) {
         obj = obj.nextSibling;
     }
     obj = obj.firstChild;
-    while (!obj.tagName) {
+    while (!tagName) {
         obj = obj.nextSibling;
     }
     obj.checked = !obj.checked;
@@ -132,16 +153,16 @@ function clickCheckedData(event) {
 
 function dbClickCheckedData(event) {
     var obj = event.srcElement ? event.srcElement : event.target;
-
-    if (obj.tagName == "INPUT") {
+    var tagName=getTagName(obj);
+    if (tagName == "INPUT") {
         return false;
     }
     obj = obj.parentNode.firstChild;
-    while (!obj.tagName) {
+    while (!tagName) {
         obj = obj.nextSibling;
     }
     obj = obj.firstChild;
-    while (!obj.tagName) {
+    while (!tagName) {
         obj = obj.nextSibling;
     }
     obj.checked = true;
@@ -186,10 +207,11 @@ var highlightcolor = '#eafcd5';
 var clickcolor = '#51b2f6';
 function changeto(event) {
     var source = event.srcElement ? event.srcElement : event.target;
-    if (source.tagName == "TR" || source.tagName == "TABLE")
+    var tagName=getTagName(source);
+    if (tagName == "TR" || tagName == "TABLE")
         return;
 
-    while (source.parentNode != undefined && source.tagName != "TD")
+    while (source.parentNode != undefined && tagName != "TD")
         source = source.parentNode;
     if (source.parentNode != undefined) {
         source = source.parentNode;
@@ -211,7 +233,7 @@ function changeback(event) {
     var toElement = event.toElement ? event.toElement : event.relatedTarget;
     if (fromElement == toElement || source == toElement || source.id == "nc")
         return
-    while (source.parentNode != undefined && source.tagName != "TD")
+    while (source.parentNode != undefined && getTagName(source) != "TD")
         source = source.parentNode;
 
     if (source.parentNode != undefined) {
@@ -228,9 +250,10 @@ function changeback(event) {
 
 function clickto() {
     var source = event.srcElement ? event.srcElement : event.target;
-    if (source.tagName == "TR" || source.tagName == "TABLE")
+    var tagName=getTagName(source);
+    if (tagName == "TR" || tagName == "TABLE")
         return;
-    while (source.tagName != "TD")
+    while (tagName != "TD")
         source = source.parentElement;
     source = source.parentElement;
     cs = source.children;
@@ -504,9 +527,12 @@ gpsRuleCheck = function (string) {
 imgCheck = function (Sting) {
     var index = Sting.lastIndexOf(".");
     var ext = Sting.substring(index + 1, Sting.length);
+    if(ext){
+        ext=ext.toLowerCase();
+    }
     if (index < 0) {
         return false;
-    } else if (ext != "png" && ext != "PNG" && ext != "jpg" && ext != "JPG") {
+    } else if (ext != "png"  && ext != "jpg" ) {
         return false;
     }
     return true;
@@ -518,9 +544,12 @@ imgCheck = function (Sting) {
 excelCheck = function (Sting) {
     var index = Sting.lastIndexOf(".");
     var ext = Sting.substring(index + 1, Sting.length);
+    if(ext){
+        ext=ext.toLowerCase();
+    }
     if (index < 0) {
         return false;
-    } else if (ext != "xls" && ext != "XLS") {
+    } else if (ext != "xls" ) {
         return false;
     }
     return true;
