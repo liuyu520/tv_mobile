@@ -78,7 +78,12 @@ jQuery.extend({
 				}						
             }catch(e)
 			{
-				jQuery.handleError(s, xml, null, e);
+                if(jQuery.handleError){
+                    jQuery.handleError(s, xml, null, e);
+                }else{
+                    alert(e.message);
+                    return;
+                }
 			}
             if ( xml || isTimeout == "timeout") 
 			{				
@@ -103,7 +108,9 @@ jQuery.extend({
                 } catch(e) 
 				{
                     status = "error";
-                    jQuery.handleError(s, xml, status, e);
+                    if(jQuery.handleError){
+                        jQuery.handleError(s, xml, status, e);
+                    }
                 }
 
                 // The request was completed
