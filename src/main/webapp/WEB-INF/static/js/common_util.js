@@ -2907,11 +2907,11 @@ com.whuang.hsj.ctrlEnter2Submit = function (event, formElement) {
 };
 /***
  * 获取事件源
- * @param event
+ * @param evt
  * @returns {*|Object}
  */
-com.whuang.hsj.getSrcElement = function (ev) {
-    var event = window.event || ev;//兼容ie7 8
+com.whuang.hsj.getSrcElement = function (evt) {
+    var event = window.event || evt;//兼容ie7 8
     var eventTarget = event.srcElement || event.target || event.toElement || event.currentTarget;
     return eventTarget;
 };

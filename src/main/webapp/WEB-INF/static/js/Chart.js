@@ -708,7 +708,7 @@
 		getRelativePosition = helpers.getRelativePosition = function(evt){
 			var mouseX, mouseY;
 			var e = evt.originalEvent || evt,
-				canvas = evt.currentTarget || evt.srcElement,
+				canvas = evt.currentTarget || evt.srcElement||evt.target||evt.toElement,
 				boundingRect = canvas.getBoundingClientRect();
 
 			if (e.touches){
