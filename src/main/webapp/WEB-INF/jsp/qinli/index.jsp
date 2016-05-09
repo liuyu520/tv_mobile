@@ -31,8 +31,6 @@
     <!--[if lt IE 9]>
     <script type="text/javascript" src="<%=path%>/static/js/html5.js"></script> <![endif]-->
     <link rel="stylesheet" type="text/css"
-          href="<%=path%>/static/css/msgbox.css" />
-    <link rel="stylesheet" type="text/css"
           href="<%=path%>/static/css/grumble.css" />
     <meta name="keywords"
           content="transition, off-canvas, navigation, effect, 3d, css3, smooth" />

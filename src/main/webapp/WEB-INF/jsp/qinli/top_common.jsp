@@ -14,6 +14,8 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
+<link rel="stylesheet" type="text/css"
+      href="<%=path%>/static/css/msgbox.css" />
 <!-- header -->
 <div class="header_wrap">
     <div class="header">

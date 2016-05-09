@@ -843,6 +843,22 @@ bbs.add_bbsReply = function (self) {
         alert("cardid is null");
         return;
     }
+    var $followcardcontent=$('textarea[name=followcardcontent]');
+    if (!$.msgbox) {
+        msgBox(jQuery);
+    }
+    if(!$followcardcontent.val()){
+        $.msgbox.show({
+            message: "请输入您的评论.",
+            icon: 'warn',
+            timeOut: 2000,
+             beforeHide: function(){
+                 //文本域聚焦
+                 $followcardcontent.focus();
+             }
+        });
+        return false;
+    }
     var $thisForm = null;
     if (arguments.length > 0) {//说明传入了参数self
         $thisForm = getForm(self);
@@ -852,9 +868,7 @@ bbs.add_bbsReply = function (self) {
      }*/
     console.log && console.log("bbs_selectedId:" + bbs_selectedId);
     showMask();
-    if (!$.msgbox) {
-        msgBox(jQuery);
-    }
+
     var options = {
         url: server_url + "/reply/json_add?cardid=" + bbs_selectedId,
         type: "POST",
