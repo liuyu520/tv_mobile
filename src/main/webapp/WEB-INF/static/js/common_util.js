@@ -2905,6 +2905,16 @@ com.whuang.hsj.ctrlEnter2Submit = function (event, formElement) {
 		submitBtn.get(0).click();
 	}
 };
+/***
+ * 获取事件源
+ * @param event
+ * @returns {*|Object}
+ */
+com.whuang.hsj.getSrcElement = function (ev) {
+    var event = window.event || ev;//兼容ie7 8
+    var eventTarget = event.srcElement || event.target || event.toElement || event.currentTarget;
+    return eventTarget;
+};
 com.whuang.hsj.imgURL = null;
 var URL = null;
 /***
@@ -2914,7 +2924,7 @@ var URL = null;
  */
 com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage) {
 	$fileElement.change(function (event) {
-		var eventTarget = event.srcElement ? event.srcElement : event.target;
+        var eventTarget = com.whuang.hsj.getSrcElement(event);
 		var files = eventTarget.files, file;
 		if (files && files.length > 0) {
 			file = files[0];
@@ -3257,7 +3267,7 @@ var pressEnterTo = function pressEnterTo(event, responseEvent, arguments2) {
 	if (!event || event == undefined) {
 		event = window.event || arguments.callee.caller.arguments[0];
 	}
-	var eventTarget = event.srcElement ? event.srcElement : event.target;
+    var eventTarget = com.whuang.hsj.getSrcElement(event);
 	if (event.keyCode == 13 && responseEvent && typeof responseEvent === 'function') {//Enter
 		if(arguments2==undefined){
 			arguments2=eventTarget;
