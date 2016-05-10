@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,14 +80,10 @@ public class UserController extends BaseController<User> {
 			login_result = Constant2.LOGIN_RESULT_SUCCESS;
 			session.setAttribute(Constant2.SESSION_KEY_LOGINED_USER, user2);
 			session.setAttribute(Constant2.SESSION_KEY_LOGINED_FLAG, Constant2.FLAG_LOGIN_SUCCESS);//登录成功的标识有两个:"user",Constant2.SESSION_KEY_LOGINED_FLAG
-			//解决关闭浏览器之后需要重新登录的问题
-			Cookie c = new Cookie("JSESSIONID", URLEncoder.encode(request.getSession().getId(), "utf-8"));
-			c.setPath("/");
-			//先设置cookie有效期为2天
-			c.setMaxAge(48 * 60 * 60);
-			response.addCookie(c);
-			map.put("session", session.getId());// 下载session id到客户端
-			map.put("userId", user2.getId());// 下载session id到客户端
+            WebServletUtil.setSessionIdCookie(request, response);
+
+            map.put("session", session.getId());// 下载session id到客户端
+            map.put("userId", user2.getId());// 下载session id到客户端
 			System.out.println("session id:" + session.getId());
 			Map mapCookie=new HashMap();
 			if(issavePasswd/*包装类型*/!=null&&issavePasswd==1)	{//记住密码
