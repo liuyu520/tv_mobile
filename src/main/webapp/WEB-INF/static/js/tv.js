@@ -1240,14 +1240,7 @@ var anchorGoWhere = function (anchorName) {
     anchorGoWhereCommon($("#subPageBBS .subContent"), anchorName);
     //$("html,body").animate({scrollTop: $("#box").offset().top}, 1000);
 };
-var anchorGoIndexTop = function (anchorName) {
-    anchorGoWhereCommon($("html,body"), anchorName);
-    //$("html,body").animate({scrollTop: $("#box").offset().top}, 1000);
-};
-var anchorGoWhereCommon = function ($target, anchorName) {
-    $target.animate({scrollTop: $("a[name=" + anchorName + "]").offset().top}, 1000);
-    //$("html,body").animate({scrollTop: $("#box").offset().top}, 1000);
-};
+
 var ios_waiting = function (self) {
     /*$(self).grumble( {//TODO
      text : '敬请期待',
