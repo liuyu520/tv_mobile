@@ -2922,7 +2922,7 @@ var URL = null;
  * @param $fileElement
  * @param $previewImage
  */
-com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage) {
+com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage,callback) {
 	$fileElement.change(function (event) {
         var eventTarget = com.whuang.hsj.getSrcElement(event);
 		var files = eventTarget.files, file;
@@ -2931,6 +2931,7 @@ com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage) {
 			//console.log(file);
 			if (file.size > 1024 * 1024 * 2) {
 				alert('image size Can\'t be more than 2MB');
+                event.returnValue=false;
 				return false;
 			}
 
@@ -2940,7 +2941,12 @@ com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage) {
 			}
 			com.whuang.hsj.imgURL = URL.createObjectURL(file);
 //                    $('body').append($('<img/>').attr('src', imgURL));
-			$previewImage.attr("src", com.whuang.hsj.imgURL);
+            if($previewImage&&$previewImage.length){
+                $previewImage.attr("src", com.whuang.hsj.imgURL);
+            }
+            if (callback && typeof callback === 'function') {
+                callback(com.whuang.hsj.imgURL);
+            }
 		}
 	});
 };
@@ -2950,8 +2956,12 @@ com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage) {
  * @param param : {url,formatTypeInvalid,success,error}
  */
 com.whuang.hsj.ajaxUploadFile = function (fileId, param) {
-	$file = $('#' + fileId);
-	var url = $file.val();
+	var $file = $('#' + fileId);
+	var url = $file.val();//如果没有选择文件,那么url为空
+    if(!url){
+        alert('请选择上传的文件');
+        return;
+    }
 	var extend = url.substring(url.indexOf(".") + 1).toLowerCase();
 	var ext = new Array("jpg", "jpeg", "png", "gif", "bmp");
 	if (param.isValidateExt &&ext.toString().indexOf(extend) == -1) {
