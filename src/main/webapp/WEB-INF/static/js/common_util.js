@@ -2862,6 +2862,10 @@ com.whuang.hsj.centerJQueryPos = function ($div22, isApplyVertical, isIncludeScr
 		if (isIncludeScroll) {
 			top = top + com.whuang.hsj.getScroll().top;
 		}
+        if (top < 0) {
+            top = 0;
+        }
+        // alert(top)
 		param['top'] = top;
 	}
 	$div22.css(param);
