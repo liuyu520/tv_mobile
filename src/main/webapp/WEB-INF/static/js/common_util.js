@@ -1525,7 +1525,7 @@ com.whuang.hsj.isEmail = function(email2) {
 	if (typeof email2 == 'object') {
 		email2 = email2.value;
 	}
-	var pattern = /\w+([_+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    var pattern = /^\w+([_+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 	return pattern.test(email2);
 };
 com.whuang.hsj.setBatchInputValue = function(inputName, valueArray) {
