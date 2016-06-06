@@ -1735,7 +1735,46 @@ function Addme2Favorite() {
 		alert("browser does not support 'window.external.AddFavorite'.");
 	}
 }
+/***
+ * 设置错误信息或成功信息(tips)
+ * @param obj
+ * @param spanId
+ * @param message
+ * @param styleClass
+ * @param keepSpace
+ */
+com.whuang.hsj.setMessage = function (obj, spanId, message, styleClass, keepSpace) {
+    if (obj != null) {
+        if (obj && obj.focus) {//if include focus method
+            obj.focus();
+        }
+    }
+    var leaveMessageResultSpan;
+    if (typeof spanId == 'string') {//if argument "spanId" just is a String
+        leaveMessageResultSpan = com.whuang.hsj.$$id(spanId);
+        if (leaveMessageResultSpan == null || leaveMessageResultSpan == undefined) {
+            leaveMessageResultSpan = com.whuang.hsj.$$one(spanId);
+        }
+    } else {
+        leaveMessageResultSpan = spanId;
+    }
+    var tagName2 = getTagName(leaveMessageResultSpan);
+    if (tagName2 === 'span' || tagName2 === 'SPAN') {
+        leaveMessageResultSpan.innerHTML = message;
+    } else {
+        leaveMessageResultSpan.innerHTML = message;
+    }
+    leaveMessageResultSpan.className = styleClass;
+    function cleanUp22() {
+        if (keepSpace) {
+            leaveMessageResultSpan.innerHTML = "&nbsp;";
+        } else {
+            leaveMessageResultSpan.innerHTML = "";
+        }
+    }
 
+    setTimeout(cleanUp22, 8000);
+};
 /***
 error message
 */
@@ -1793,13 +1832,15 @@ com.whuang.hsj.checkNullValue=function(obj,spanId,message,keepSpace){
 		}
 	 }
 	 if (typeof spanId == 'string') {//
-	 	spanId=com.whuang.hsj.$$id(spanId);
-	 	if(spanId==null ||spanId==undefined){
+         var spanIdTmp = com.whuang.hsj.$$id(spanId);
+         if (spanIdTmp == null || spanIdTmp == undefined) {
 			spanId=com.whuang.hsj.$$one(spanId);
-		}
+         } else {
+             spanId = spanIdTmp;
+         }
 	 }
 	 if(!com.whuang.hsj.isHasValue( obj.value)){
-	 	if(spanId!=undefined &&spanId!=null){
+         if (spanId) {
 		 com.whuang.hsj.setErrorMessage(obj,spanId,message,keepSpace);
 		 }
          return false;
@@ -1826,7 +1867,7 @@ com.whuang.hsj.checkSelectNullValue=function(obj,spanId,message){
 	 return true;
 };
 com.whuang.hsj.startWith=function(str,regex){
-	if(regex==undefined||str==undefined){
+    if (regex == undefined || str == undefined || !str) {
         return false;
     }
 	return str.indexOf(regex)==0;
