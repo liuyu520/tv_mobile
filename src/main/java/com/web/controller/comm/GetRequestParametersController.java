@@ -1,20 +1,18 @@
 package com.web.controller.comm;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
 import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /***
  * 
@@ -23,6 +21,31 @@ import com.string.widget.util.ValueWidget;
 @Controller
 @RequestMapping("/info")
 public class GetRequestParametersController {
+    public static Map getRequestMap(HttpServletRequest request) throws IOException {
+        String requestBody = WebServletUtil.getRequestPostStr(request);
+        String path = request.getContextPath();
+        String basePath = WebServletUtil.getBasePath(request);
+        System.out.println("basePath:" + basePath);
+        String charEncoding = request.getCharacterEncoding();
+        String queryStr = WebServletUtil.getRequestQueryStr(request, null);
+        Map parameterMap = request.getParameterMap();
+        String queryString = request.getQueryString();
+        Map map = new HashMap();
+        System.out.println(SystemHWUtil.DIVIDING_LINE);
+        map.put("requestBody", requestBody);
+        map.put("queryStr", queryStr);
+        map.put("parameterMap", parameterMap);
+        map.put("request charEncoding", charEncoding);
+        map.put("queryString", queryString);
+        if (ValueWidget.isNullOrEmpty(charEncoding)) {
+            charEncoding = SystemHWUtil.CHARSET_UTF;
+        }
+        if (!ValueWidget.isNullOrEmpty(queryString)) {
+            map.put("decode queryString", URLDecoder.decode(queryString, charEncoding));
+        }
+        return map;
+    }
+
 	@ResponseBody
 	@RequestMapping(value = "/request0", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String getParameter4(HttpServletRequest request
@@ -35,35 +58,25 @@ public class GetRequestParametersController {
 		map.put("address", address);
 		return HWJacksonUtils.getJsonP(map);
 	}
+
 	@ResponseBody
-	@RequestMapping(value = "/request", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
-	public String getParameter(HttpServletRequest request) throws IOException {
-		String requestBody = WebServletUtil.getRequestPostStr(request);
-		String path = request.getContextPath();
-		String basePath = WebServletUtil.getBasePath(request);
-		System.out.println("basePath:"+basePath);
-		String charEncoding = request.getCharacterEncoding();
-		String queryStr = WebServletUtil.getRequestQueryStr(request, null);
-		Map parameterMap=request.getParameterMap();
-		String queryString=request.getQueryString();
-		Map map = new HashMap();
-		System.out.println(SystemHWUtil.DIVIDING_LINE);
-		map.put("requestBody", requestBody);
-		map.put("queryStr", queryStr);
-		map.put("parameterMap", parameterMap);
-		map.put("request charEncoding", charEncoding);
-		map.put("queryString", queryString);
-		if(ValueWidget.isNullOrEmpty(charEncoding)){
-			charEncoding=SystemHWUtil.CHARSET_UTF;
-		}
-		if(!ValueWidget.isNullOrEmpty(queryString)){
-			map.put("decode queryString", URLDecoder.decode(queryString, charEncoding));
-		}
-		return HWJacksonUtils.getJsonP(map);
+    @RequestMapping(value = "/request_a", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+    public String getParametera(HttpServletRequest request) throws IOException {
+        Map map = getRequestMap(request);
+        map.put("api", "request_a");
+        return HWJacksonUtils.getJsonP(map);
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/request3", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+
+    @ResponseBody
+    @RequestMapping(value = "/request_b", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
+    public String getParameterb(HttpServletRequest request) throws IOException {
+        Map map = getRequestMap(request);
+        map.put("api", "request_b");
+        return HWJacksonUtils.getJsonP(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/request3", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String getParameter3(HttpServletRequest request) throws IOException {
 		String requestBody = WebServletUtil.getRequestPostStr(request);
 		String queryStr = WebServletUtil.getRequestQueryStr(request, null);
