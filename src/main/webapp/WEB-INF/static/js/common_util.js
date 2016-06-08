@@ -3586,3 +3586,9 @@ var anchorGoWhereCommon = function ($target, anchorName) {
     $target.animate({scrollTop: $("a[name=" + anchorName + "]").offset().top}, 200);
     //$("html,body").animate({scrollTop: $("#box").offset().top}, 1000);
 };
+//切换作用域
+hitch = function (scope, method) {
+    return function () {
+        return method.apply(scope, arguments);
+    }
+};
