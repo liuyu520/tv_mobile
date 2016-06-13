@@ -4,9 +4,11 @@ import com.common.dict.Constant2;
 import com.common.web.view.PageView;
 import com.entity.SimpleInfo;
 import com.string.widget.util.RegexUtil;
+import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
 import oa.web.controller.base.BaseController;
 import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,12 +58,16 @@ public class SimpleInfoController extends BaseController<SimpleInfo>{
 		super.listTODO(model, view, request);
 		List list=view.getRecordList();
 		int size = list.size();
-		for (int i = 0; i < size; i++) {
+        String isXss = request.getParameter("xss");
+        for (int i = 0; i < size; i++) {
 			Object obj=list.get(i);
 			if(obj!=null && obj instanceof SimpleInfo){
 				SimpleInfo info=(SimpleInfo)obj;
 				String content=info.getInfo();
-				info.setInfo(RegexUtil.convertBr(content));
+                if (!ValueWidget.isNullOrEmpty(isXss) && isXss.equalsIgnoreCase("true")) {
+                    content = StringEscapeUtils.escapeHtml4(content);
+                }
+                info.setInfo(RegexUtil.convertBr(content));
 
 			}
 		}
