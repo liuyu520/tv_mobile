@@ -2159,10 +2159,15 @@ com.whuang.hsj.isInDiv= function(event22,divObj,isFixed){
     }
 };
 //Cross browser gets the position of scroll
+/***
+ *
+ * @returns {{top: number, left: number, height: 整个文档的高度,包括看不到的部分}}
+ */
 com.whuang.hsj.getScroll=function(){
     return {
         top:document.documentElement.scrollTop || document.body.scrollTop,
         left:document.documentElement.scrollLeft || document.body.scrollLeft,
+        //等价于 $(document).height()
         height:document.documentElement.scrollHeight ||document.body.scrollHeight
     };
 };
@@ -2562,6 +2567,9 @@ var toggleAnimateCommon=function(jqueryObj,params22,isTwice,speed1,speed2,times2
 	
 }
 //Cross browser gets the size of Visual area window,Have nothing to do with scroll bars
+/***
+ * 仅获取可视区域的大小
+ */
 var getInner=(function() {
 	// alert(typeof window.innerWidth !== 'undefined');
 	if (typeof window.innerWidth !== 'undefined') {//Notice:'undefined' is right
