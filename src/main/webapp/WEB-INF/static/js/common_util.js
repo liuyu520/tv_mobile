@@ -3000,7 +3000,7 @@ com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage,cal
             if($previewImage&&$previewImage.length){
                 $previewImage.attr("src", com.whuang.hsj.imgURL);
             }
-            if (callback && typeof callback === 'function') {
+            if (typeof callback === 'function') {
                 callback(com.whuang.hsj.imgURL);
             }
 		}
@@ -3334,7 +3334,7 @@ var pressEnterTo = function pressEnterTo(event, responseEvent, arguments2) {
 		event = window.event || arguments.callee.caller.arguments[0];
 	}
     var eventTarget = com.whuang.hsj.getSrcElement(event);
-	if (event.keyCode == 13 && responseEvent && typeof responseEvent === 'function') {//Enter
+	if (event.keyCode == 13 && typeof responseEvent === 'function') {//Enter
 		if(arguments2==undefined){
 			arguments2=eventTarget;
 		}
