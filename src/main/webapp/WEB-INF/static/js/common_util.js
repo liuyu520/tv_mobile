@@ -2975,15 +2975,18 @@ var URL = null;
  * @param $fileElement
  * @param $previewImage
  */
-com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage,callback) {
+com.whuang.hsj.previewLocalDiskImage = function ($fileElement, $previewImage,callback,maxSizeM) {
 	$fileElement.change(function (event) {
         var eventTarget = com.whuang.hsj.getSrcElement(event);
 		var files = eventTarget.files, file;
 		if (files && files.length > 0) {
 			file = files[0];
 			//console.log(file);
-			if (file.size > 1024 * 1024 * 2) {
-				alert('image size Can\'t be more than 2MB');
+            if(!maxSizeM){
+                maxSizeM=2;
+            }
+			if (file.size > 1024 * 1024 * maxSizeM) {
+				alert('image size Can\'t be more than '+maxSizeM+'MB');
                 event.returnValue=false;
 				return false;
 			}
