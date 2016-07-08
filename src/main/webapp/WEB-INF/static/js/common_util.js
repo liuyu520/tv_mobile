@@ -1867,7 +1867,10 @@ com.whuang.hsj.checkSelectNullValue=function(obj,spanId,message){
 	 return true;
 };
 com.whuang.hsj.startWith=function(str,regex){
-    if (regex == undefined || str == undefined || !str) {
+    if (typeof str != 'string' || typeof regex != 'string') {
+        return false;
+    }
+    if (!regex || !str) {
         return false;
     }
 	return str.indexOf(regex)==0;
