@@ -2885,8 +2885,9 @@ var cleanUpDefaultEvent = function cleanUpDefaultEvent(event) {
 	event = event || window.event || arguments.callee.caller.arguments[0];
 	if (event.preventDefault) {//IE not have
 		event.preventDefault();
-	}
-	event.returnValue = false;
+	}else{
+        event.returnValue = false;
+    }
 };
 /***
  * 阻止事件冒泡
