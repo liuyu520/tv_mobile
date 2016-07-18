@@ -3610,7 +3610,11 @@ hitch = function (scope, method) {
 
 /***
  * 需要注意:分支二走完之后,需要清空t_start 吗?<br>
- *     如果不清空,会有这种清空:执行完分支二之后,马上执行分支一
+ *     如果不清空,会有这种清空:执行完分支二之后,马上执行分支一<br>
+ *         e.g:var func3=throttle3(myFunc,2000,2100);<br>
+ *         需要保证:(1)连续频繁地点击,则每隔runDelay 秒,必须执行一次;<br>
+ *         (2)随意的乱点击,一定会执行至少一次<br>
+ *         定时器执行时,需要重置t_start,否则执行完分支二之后,马上执行分支一<br>
  * @param fn
  * @param delay
  * @param runDelay
@@ -3627,12 +3631,18 @@ function throttle3(fn, delay, runDelay) {
         if (!t_start) {
             t_start = t_cur;
         }
+        // console.log('t_start:'+t_start);
+        // console.log('t_cur:'+t_cur);
+        // console.log('t_cur - t_start:'+(t_cur - t_start));
         if (t_cur - t_start >= runDelay) {
             fn.apply(context, args);//分支一
             t_start = t_cur;
+            console.log('一:' + new Date());
         } else {
             timer = setTimeout(function () {//分支二
                 fn.apply(context, args);
+                console.log('二:' + new Date());
+                t_start = new Date();
             }, delay);
         }
     }
