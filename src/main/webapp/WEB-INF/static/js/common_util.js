@@ -3624,9 +3624,14 @@ function throttle3(fn, delay, runDelay, scope) {
     var timer = null;
     var t_start;
     return function () {
+        //没有传递参数runDelay,但是传递scope
+        if (runDelay && (typeof runDelay != 'number') && (!scope)) {
+            scope = runDelay;
+        }
         var context = scope || this,
             args = arguments,
             t_cur = new Date();
+        // console.log(context);
         timer && clearTimeout(timer);
         if (!t_start) {
             t_start = t_cur;
