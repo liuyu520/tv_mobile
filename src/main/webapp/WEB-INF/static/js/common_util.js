@@ -3620,11 +3620,11 @@ hitch = function (scope, method) {
  * @param runDelay
  * @returns {Function}
  */
-function throttle3(fn, delay, runDelay) {
+function throttle3(fn, delay, runDelay, scope) {
     var timer = null;
     var t_start;
     return function () {
-        var context = this,
+        var context = scope || this,
             args = arguments,
             t_cur = new Date();
         timer && clearTimeout(timer);
