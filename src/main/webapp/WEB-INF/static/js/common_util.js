@@ -3634,7 +3634,7 @@ function throttle3(fn, delay, runDelay) {
         // console.log('t_start:'+t_start);
         // console.log('t_cur:'+t_cur);
         // console.log('t_cur - t_start:'+(t_cur - t_start));
-        if (t_cur - t_start >= runDelay) {
+        if ((typeof runDelay != 'undefined') && (t_cur - t_start >= runDelay)) {
             fn.apply(context, args);//分支一
             t_start = t_cur;
             console.log('一:' + new Date());
