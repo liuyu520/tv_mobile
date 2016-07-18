@@ -3607,3 +3607,33 @@ hitch = function (scope, method) {
         return method.apply(scope, arguments);
     }
 };
+
+/***
+ * 需要注意:分支二走完之后,需要清空t_start 吗?<br>
+ *     如果不清空,会有这种清空:执行完分支二之后,马上执行分支一
+ * @param fn
+ * @param delay
+ * @param runDelay
+ * @returns {Function}
+ */
+function throttle3(fn, delay, runDelay) {
+    var timer = null;
+    var t_start;
+    return function () {
+        var context = this,
+            args = arguments,
+            t_cur = new Date();
+        timer && clearTimeout(timer);
+        if (!t_start) {
+            t_start = t_cur;
+        }
+        if (t_cur - t_start >= runDelay) {
+            fn.apply(context, args);//分支一
+            t_start = t_cur;
+        } else {
+            timer = setTimeout(function () {//分支二
+                fn.apply(context, args);
+            }, delay);
+        }
+    }
+}
