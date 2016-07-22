@@ -3639,16 +3639,36 @@ function throttle3(fn, delay, runDelay, scope) {
         // console.log('t_start:'+t_start);
         // console.log('t_cur:'+t_cur);
         // console.log('t_cur - t_start:'+(t_cur - t_start));
+        //runDelay的类型等于'undefined',表示没有传递参数runDelay
         if ((typeof runDelay != 'undefined') && (t_cur - t_start >= runDelay)) {
             fn.apply(context, args);//分支一
             t_start = t_cur;
-            console.log('一:' + new Date());
+            // console.log('一:' + new Date());
         } else {
             timer = setTimeout(function () {//分支二
                 fn.apply(context, args);
-                console.log('二:' + new Date());
+                // console.log('二:' + new Date());
                 t_start = new Date();
             }, delay);
         }
     }
 }
+/***
+ * 可以以相同的时间间隔来执行<br>
+ *     但是有个问题:当停止的时刻在当前周期中时,不会执行.<br>
+ *     所以不适用于窗口的resize事件
+ * @param delay
+ * @param action
+ * @returns {Function}
+ */
+var throttle = function (delay, action) {
+    var last = 0;
+    return function () {
+        var curr = +new Date();
+        console.log('curr - last:' + (curr - last))
+        if (curr - last > delay) {
+            action.apply(this, arguments);
+            last = curr;
+        }
+    };
+};
