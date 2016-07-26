@@ -33,6 +33,9 @@ public class GetRequestParametersController {
         Map map = new HashMap();
         System.out.println(SystemHWUtil.DIVIDING_LINE);
         map.put("requestBody", requestBody);
+        if (null != queryStr) {
+            queryStr = queryStr.replace("\u0000", SystemHWUtil.EMPTY);
+        }
         map.put("queryStr", queryStr);
         map.put("parameterMap", parameterMap);
         map.put("request charEncoding", charEncoding);
