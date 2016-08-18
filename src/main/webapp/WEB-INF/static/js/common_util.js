@@ -2683,6 +2683,9 @@ function setCheckboxTrueJquery(jqueryObj)
  */
 com.whuang.hsj.getCustomAttr=function(htmlNode22,attr)
 {
+    if (!htmlNode22) {
+        return;
+    }
 if('length' in htmlNode22){//jquery 对象
         htmlNode22=htmlNode22[0];
     }
