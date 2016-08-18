@@ -197,7 +197,7 @@ public class BBSController extends BaseController<BBS> {
 		return content;
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 
 	@Override

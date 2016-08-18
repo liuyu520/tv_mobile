@@ -1,23 +1,5 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.util.AuthenticateUtil;
-import oa.web.controller.base.BaseController;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
 import com.dao.HouseBuildingDao;
@@ -30,7 +12,21 @@ import com.entity.VoteLog;
 import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
-import com.util.TVUtils;
+import oa.util.AuthenticateUtil;
+import oa.web.controller.base.BaseController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 @Controller
 @RequestMapping("/vote")
 public class VoteController extends BaseController<Vote>{
@@ -55,7 +51,7 @@ public class VoteController extends BaseController<Vote>{
 		this.houseBuildingDao = houseBuildingDao;
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 		
 	}
 	@Override

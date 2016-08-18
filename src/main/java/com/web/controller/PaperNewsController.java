@@ -362,7 +362,7 @@ public class PaperNewsController extends BaseController<PaperNews> {
 		return content;
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 
 	}
 

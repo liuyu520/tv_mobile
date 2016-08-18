@@ -25,7 +25,7 @@ import java.util.List;
 public class SimpleInfoController extends BaseController<SimpleInfo>{
 	private String label = "sinfo";
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 		
 	}
 

@@ -1,19 +1,5 @@
 package com.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import oa.web.controller.base.BaseController;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.SystemHWUtil;
 import com.dao.PushDeviceDao;
 import com.dao.ReceivedPushMessageDao;
@@ -24,6 +10,17 @@ import com.entity.User;
 import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
+import oa.web.controller.base.BaseController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /***
  * 
@@ -66,7 +63,7 @@ public class ReceivedPushMessageController extends BaseController<ReceivedPushMe
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 
 	@Override

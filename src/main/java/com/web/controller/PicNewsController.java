@@ -185,7 +185,7 @@ public class PicNewsController extends BaseController<PicNews> {
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 		
 	}
 

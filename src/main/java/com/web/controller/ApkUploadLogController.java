@@ -1,18 +1,18 @@
 package com.web.controller;
 
+import com.entity.ApkUploadLog;
+import oa.web.controller.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import oa.web.controller.base.BaseController;
-
-import com.entity.ApkUploadLog;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/app/upload")
 public class ApkUploadLogController extends BaseController<ApkUploadLog> {
     @Override
-    protected void beforeAddInput(Model model) {
+    protected void beforeAddInput(Model model,HttpServletRequest request) {
 
     }
 

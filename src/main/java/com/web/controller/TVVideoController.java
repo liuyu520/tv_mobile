@@ -60,7 +60,7 @@ public class TVVideoController extends BaseController<TVVideo> {
 	}
 
 	@Override
-	protected void beforeAddInput(Model arg0) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 
 	}
 

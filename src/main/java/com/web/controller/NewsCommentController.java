@@ -1,26 +1,5 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.AccessLog;
-import oa.util.AuthenticateUtil;
-import oa.web.controller.base.BaseController;
-
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.PageUtil;
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
@@ -33,8 +12,25 @@ import com.entity.User;
 import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
-import com.util.TVUtils;
 import com.view.NewsCommentView;
+import oa.entity.common.AccessLog;
+import oa.util.AuthenticateUtil;
+import oa.web.controller.base.BaseController;
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.codehaus.jackson.map.ser.FilterProvider;
+import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
+import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/comment")
@@ -228,7 +224,7 @@ public class NewsCommentController extends BaseController<NewsComment> {
 		return getJspFolder2()+"/add";
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 
 	}
 

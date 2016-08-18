@@ -1,12 +1,12 @@
 package com.web.controller;
 
+import com.entity.HouseBuilding;
 import oa.web.controller.base.BaseController;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.entity.HouseBuilding;
+import javax.servlet.http.HttpServletRequest;
 /***
  * 访问手机app的日志
  * @author Administrator
@@ -18,7 +18,7 @@ public class HouseBuildingController extends BaseController<HouseBuilding> {
 	private String label = "access";
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 	
 	@Override

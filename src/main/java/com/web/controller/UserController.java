@@ -427,7 +427,7 @@ username: "120437193"
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 
 	@Override

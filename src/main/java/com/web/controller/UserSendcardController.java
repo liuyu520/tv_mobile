@@ -1,24 +1,5 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.AccessLog;
-import oa.web.controller.base.BaseController;
-
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.PageUtil;
 import com.common.util.SystemHWUtil;
 import com.common.web.view.PageView;
@@ -32,6 +13,22 @@ import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
 import com.view.NewsCommentView;
 import com.view.UserSendcardView;
+import oa.entity.common.AccessLog;
+import oa.web.controller.base.BaseController;
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
+import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * 论坛评论
  * @author huangwei
@@ -190,7 +187,7 @@ public class UserSendcardController extends BaseController<UserSendcard> {
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 
 	}
 

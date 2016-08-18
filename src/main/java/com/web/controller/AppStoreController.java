@@ -1,21 +1,18 @@
 package com.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.dict.Constant2;
+import com.io.hw.json.HWJacksonUtils;
+import com.string.widget.util.ValueWidget;
 import oa.service.DictionaryParam;
 import oa.web.controller.base.BaseController;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dict.Constant2;
-import com.io.hw.json.HWJacksonUtils;
-import com.string.widget.util.ValueWidget;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 /***
  * 
  * @author huangweii
@@ -49,7 +46,7 @@ public class AppStoreController extends BaseController{
 		return content;
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 
 	@Override

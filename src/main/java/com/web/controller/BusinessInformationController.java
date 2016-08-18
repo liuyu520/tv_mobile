@@ -1,20 +1,5 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.AccessLog;
-import oa.web.controller.base.BaseController;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.PageUtil;
 import com.common.util.SystemHWUtil;
 import com.common.web.view.PageView;
@@ -22,6 +7,18 @@ import com.entity.BusinessInformation;
 import com.io.hw.json.HWJacksonUtils;
 import com.util.JSONPUtil;
 import com.view.BusinessInformationView;
+import oa.entity.common.AccessLog;
+import oa.web.controller.base.BaseController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 @Controller
 @RequestMapping("/business_information")
 public class BusinessInformationController extends BaseController<BusinessInformation> {
@@ -83,7 +80,7 @@ public class BusinessInformationController extends BaseController<BusinessInform
 		return content;
 	}
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 		
 	}
 

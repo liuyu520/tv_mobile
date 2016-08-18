@@ -91,7 +91,7 @@ public class PushDeviceController extends BaseController<PushDevice> {
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
+	protected void beforeAddInput(Model model,HttpServletRequest request) {
 	}
 
 	@Override
