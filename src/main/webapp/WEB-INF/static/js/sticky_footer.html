@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>footer始终在底部</title>
+    <style>
+        /* 防止UA Default影响高度计算 */
+        *{
+            margin: 0;
+        }
+        /* .footer的每一级父元素都为100%高 */
+        html, body {
+            height: 100%;
+        }
+        .page-wrap {
+            /* 页面内容撑满100%的屏幕 */
+            min-height: 100%;
+            /* 负边距大小即为页脚高度 */
+            margin-bottom: -60px;
+        }
+        /* 用来填充被页脚遮挡部分 */
+        .page-wrap:after {
+            content: "";
+            display: block;
+        }
+        /* 填充块和页脚一样高 */
+        .site-footer, .page-wrap:after {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+<div style="background-color: #03a9f4" class="page-wrap">This is an article about CSS.</div>
+<div style="background-color: bisque;" class="footer">Copyright@ Harttle Land 2016</div>
+</body>
+</html>
