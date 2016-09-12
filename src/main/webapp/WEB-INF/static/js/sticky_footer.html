@@ -28,9 +28,36 @@
             height: 60px;
         }
     </style>
+    <script type="text/javascript">
+        var isIE8;
+    </script>
+    <!--[if IE 8]>
+        <script>
+            isIE8=true;
+            alert(isIE8)
+        </script>
+    <![endif]-->
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="common_util.js"></script>
+    <script type="text/javascript">
+        //alert('isIE8:'+isIE8);
+        var footerIE8=function () {
+            var $foot=$('.site-footer');
+            var content=$foot.html();
+            $foot.html(content);
+            console.log('footerIE8');
+        };
+        var footerIE8Throttle=throttle3(footerIE8,200);
+        window.onresize = function () {
+            if(isIE8){
+                footerIE8Throttle();
+            }
+        }
+    </script>
 </head>
 <body>
-<div style="background-color: #03a9f4" class="page-wrap">This is an article about CSS.</div>
-<div style="background-color: bisque;" class="footer">Copyright@ Harttle Land 2016</div>
+<div style="background-color: #03a9f4" class="page-wrap">This is an article about CSS.
+</div>
+<div style="background-color: bisque;" class="site-footer">Copyright@ Harttle Land 2016</div>
 </body>
 </html>
