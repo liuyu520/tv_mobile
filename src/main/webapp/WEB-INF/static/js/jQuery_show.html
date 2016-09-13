@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Safari中jQuery show第一次不显示</title>
+    <style>
+
+    </style>
+    <script type="text/javascript" src="jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="common_util.js"></script>
+    <script type="text/javascript">
+        //创建企业
+        var dialogCreateOrgTemplate='<div id="myDialog" > <table class="createOrgTable" width="100%" border="0" cellspacing="0" cellpadding="0">' +
+                '        <tr>' +
+                '            <td width="100"align="right">企业名称：</td>' +
+                '            <td>' +
+                '                <input class="inf-input" type="text" id="org-name" autocomplete="off"  />' +
+                '            </td>' +
+                '        </tr>' +
+                /*'        <tr>' +
+                 '            <td></td>' +
+                 '            <td><span id="org-name-error" class="warning "></span></td>  </tr>' +
+                 '        <tr>' +*/
+                '            <td width="100"align="right"></td>' +
+                '            <td>' +
+                '                <a class="pop-btn btn-qx">取消</a>' +
+                '                <a  id="create-org" class="pop-btn btn-bc">创建新企业</a>' +
+                '            </td>' +
+                '        </tr>' +
+                '    </table></div>';
+        var showDialog=function (event) {
+            var cssLink = document.createElement("link");
+            cssLink.type = 'text/css';
+            cssLink.rel = 'stylesheet';
+            cssLink.href = 'http://localhost:8088/css/test_show.css';
+            document.getElementsByTagName('head')[0].appendChild(cssLink);
+            $('body').append(dialogCreateOrgTemplate);
+            var $myDialog=$('#myDialog');
+            console.log($myDialog[0].style.display);
+            $myDialog.show();
+            console.log($myDialog[0].style.display);
+        }
+    </script>
+</head>
+<body>
+<div>
+    <input type="button" value="弹框" onclick="showDialog()" >
+</div>
+</body>
+</html>
