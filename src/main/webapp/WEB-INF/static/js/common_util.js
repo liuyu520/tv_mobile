@@ -3334,7 +3334,7 @@ function isType(obj, type) {
 	return (new RegExp('\\[object[\\s]*' + type + '\\]', "i")).test(toStr);
 }
 /***
- enter to to something identified by responseEvent
+ enter to to something specified by responseEvent
  */
 var pressEnterTo = function pressEnterTo(event, responseEvent, arguments2) {
 	if (!event || event == undefined) {
@@ -3613,7 +3613,7 @@ hitch = function (scope, method) {
 
 /***
  * 需要注意:分支二走完之后,需要清空t_start 吗?<br>
- *     如果不清空,会有这种清空:执行完分支二之后,马上执行分支一<br>
+ *     如果不清空,会有这种情况:执行完分支二之后,马上执行分支一<br>
  *         e.g:var func3=throttle3(myFunc,2000,2100);<br>
  *         需要保证:(1)连续频繁地点击,则每隔runDelay 秒,必须执行一次;<br>
  *         (2)随意的乱点击,一定会执行至少一次<br>
