@@ -2579,14 +2579,18 @@ var getInner=(function() {
 		return function(){
 			return {
 				width : window.innerWidth,
-				height : window.innerHeight
+                height: window.innerHeight,
+                top: document.body.scrollTop,
+                left: document.body.scrollLeft
 			}
 		}
 	} else {
 		return function(){
 			return {
 				width : document.documentElement.clientWidth,
-				height : document.documentElement.clientHeight
+                height: document.documentElement.clientHeight,
+                top: document.documentElement.scrollTop,
+                left: document.documentElement.scrollLeft
 			}
 		}
 	}
@@ -3619,7 +3623,7 @@ hitch = function (scope, method) {
  *         (2)随意的乱点击,一定会执行至少一次<br>
  *         定时器执行时,需要重置t_start,否则执行完分支二之后,马上执行分支一<br>
  * @param fn
- * @param delay
+ * @param delay : 延迟执行的倒计时,如果多次调用,新的会把旧的倒计时冲掉
  * @param runDelay
  * @returns {Function}
  */
