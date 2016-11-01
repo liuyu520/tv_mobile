@@ -160,8 +160,8 @@ public class VersionController  extends BaseController {
     }
 
 	@Override
-	protected void beforeAddInput(Model model) {
-	}
+    protected void beforeAddInput(Model model, HttpServletRequest request) {
+    }
 
 	@Override
 	protected void errorDeal(Model model) {

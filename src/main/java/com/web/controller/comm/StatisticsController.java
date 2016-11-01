@@ -1,24 +1,21 @@
 package com.web.controller.comm;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.common.util.SystemHWUtil;
+import com.dict.Constant2;
+import com.io.hw.json.HWJacksonUtils;
 import oa.bean.statistics.StatisticsBean;
 import oa.dao.common.AccessLogDao;
 import oa.entity.common.AccessLog;
 import oa.web.controller.base.BaseController;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.common.util.SystemHWUtil;
-import com.dict.Constant2;
-import com.io.hw.json.HWJacksonUtils;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/statistics")
@@ -63,9 +60,9 @@ public class StatisticsController  extends BaseController<AccessLog> {
 	
 	
 	@Override
-	protected void beforeAddInput(Model model) {
-		
-	}
+    protected void beforeAddInput(Model model, HttpServletRequest request) {
+
+    }
 
 	@Override
 	protected void errorDeal(Model model) {

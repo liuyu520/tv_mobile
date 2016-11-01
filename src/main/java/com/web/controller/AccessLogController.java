@@ -1,28 +1,24 @@
 package com.web.controller;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.dao.common.AccessLogDao;
-import oa.entity.common.AccessLog;
-import oa.web.controller.base.BaseController;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.util.SystemHWUtil;
 import com.dict.Constant2;
 import com.io.hw.json.HWJacksonUtils;
 import com.string.widget.util.ValueWidget;
 import com.time.util.TimeHWUtil;
-import com.util.JSONPUtil;
 import com.view.PaperNewsView;
+import oa.dao.common.AccessLogDao;
+import oa.entity.common.AccessLog;
+import oa.web.controller.base.BaseController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 /***
  * 访问手机app的日志
  * @author Administrator
@@ -79,8 +75,8 @@ public class AccessLogController extends BaseController<AccessLog> {
 	}
 	
 	@Override
-	protected void beforeAddInput(Model model) {
-	}
+    protected void beforeAddInput(Model model, HttpServletRequest request) {
+    }
 	
 	@Override
 	protected void errorDeal(Model model) {

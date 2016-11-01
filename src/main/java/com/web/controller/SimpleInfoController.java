@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 /***
  * 简单的消息,不记录发布者
@@ -46,11 +47,12 @@ public class SimpleInfoController extends BaseController<SimpleInfo>{
 	}
 
 	@Override
-	protected void beforeSave(SimpleInfo roleLevel, Model model) {
-		super.beforeSave(roleLevel, model);
-		roleLevel.setCreateTime(TimeHWUtil.getCurrentTimeLong());
+    protected boolean beforeSave(SimpleInfo roleLevel, Model model, HttpServletResponse response) {
+        super.beforeSave(roleLevel, model, response);
+        roleLevel.setCreateTime(TimeHWUtil.getCurrentTimeLong());
 		roleLevel.setStatus(Constant2.NEWS_STATUS_ON);
-	}
+        return true;
+    }
 
 	@Override
 	protected void listTODO(Model model, PageView view,

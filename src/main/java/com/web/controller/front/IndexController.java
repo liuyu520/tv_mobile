@@ -1,26 +1,5 @@
 package com.web.controller.front;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import oa.entity.common.CommonDictionary;
-import oa.service.DictionaryParam;
-import oa.web.controller.base.BaseController;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.common.util.SystemHWUtil;
 import com.common.util.WebServletUtil;
 import com.dao.CarouselDiagramDao;
@@ -34,7 +13,24 @@ import com.entity.TVVideo;
 import com.io.hw.file.util.FileUtils;
 import com.string.widget.util.ValueWidget;
 import com.util.JSONPUtil;
-import com.util.TVUtils;
+import oa.entity.common.CommonDictionary;
+import oa.service.DictionaryParam;
+import oa.web.controller.base.BaseController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /***
  * 
  * @author huangwei
@@ -227,8 +223,8 @@ public class IndexController extends BaseController{
 
 
 	@Override
-	protected void beforeAddInput(Model model) {
-	}
+    protected void beforeAddInput(Model model, HttpServletRequest request) {
+    }
 
 
 

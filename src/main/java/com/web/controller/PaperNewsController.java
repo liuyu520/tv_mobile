@@ -38,6 +38,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -299,9 +300,9 @@ public class PaperNewsController extends BaseController<PaperNews> {
 	@ResponseBody
 	@RequestMapping(value = "/json_add_tips", produces = SystemHWUtil.RESPONSE_CONTENTTYPE_JSON_UTF)
 	public String jsonAddTips(Model model, PaperNews paperNews,
-			PaperNewsView view, HttpSession session,
-			HttpServletRequest request, String callback) throws IOException {
-		init(request);
+                              PaperNewsView view, HttpSession session,
+                              HttpServletRequest request, HttpServletResponse response, String callback) throws IOException {
+        init(request);
 		int login_result = 0;
 		User user2 =null;
 		String content;
@@ -349,9 +350,9 @@ public class PaperNewsController extends BaseController<PaperNews> {
 					e.printStackTrace();
 				}
 			}
-			
-			beforeSave(paperNews, model);
-			getDao().add(paperNews);
+
+            beforeSave(paperNews, model, response);
+            getDao().add(paperNews);
 			login_result=Constant2.LOGIN_RESULT_SUCCESS;
 			map.put("tips", paperNews);
 		}
@@ -494,16 +495,16 @@ public class PaperNewsController extends BaseController<PaperNews> {
 	}
 
 	@Override
-	protected void beforeSave(PaperNews roleLevel, Model model) {
-		super.beforeSave(roleLevel, model);
-		String picPath=roleLevel.getPic();
+    protected boolean beforeSave(PaperNews roleLevel, Model model, HttpServletResponse response) {
+        super.beforeSave(roleLevel, model, response);
+        String picPath=roleLevel.getPic();
 		String webInf="WEB-INF/static/img/";
 		if(!ValueWidget.isNullOrEmpty(picPath)&&picPath.startsWith(webInf)){
 			picPath=picPath.replaceAll(webInf, SystemHWUtil.EMPTY);
 			roleLevel.setPic(picPath);
 		}
-		
-	}
+        return true;
+    }
 	protected String getListView(){
 		return "/index";
 	}
